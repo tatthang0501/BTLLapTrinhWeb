@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <title>Quản lý thông tin phòng</title>
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
   </head>
   <body>
 
@@ -30,7 +30,7 @@
     </div>
 
     <div class="container stuFo">
-      <form class=" inputStudentName" action="@{motorbike/findMotorbike}" method="post">
+      <form class=" inputStudentName" th:action="@{/motorbike/findMotorbike}" method="post">
         <h1 class = "addSV">Tìm xe</h1>
         <table>
           <tr>
@@ -41,7 +41,7 @@
         <input type="submit" name="findService" value="Tìm">
       </form>
 
-      <form class="stuFoundForm" action="index.html" method="post">
+      <form class="stuFoundForm" action="" method="post">
         <table id="stuFound">
           <tr>
             <th>ID</th>
@@ -53,13 +53,14 @@
             <th>Xóa</th>
           </tr>
           <tr th:each="motorbike: ${motorbikes}">
-            <td th:value="${motorbike.id}" th:text="${motorbike.id}"></td>
-            <td th:value="${motorbike.loaixe}" th:text="${motorbike.loaixe}"></td>
-            <td th:value="${motorbike.giatri}" th:text="${motorbike.giatri}"></td>
-            <td th:value="${motorbike.bienso}" th:text="${motorbike.bienso}"></td>
-            <td th:value="${motorbike.sinhvienid}" th:text="${student.studentName}"></td>
-            <td><a th:href="@{/motorbike/editMotorbike(id=${motorbike.id})}" value="Sửa"></a></td>
-            <td><a th:href="@{/motorbike/deleteMotorbike(id=${motorbike.id})}" value="Xóa"></a></td>
+            <td th:field="${motorbike.id}" th:text="${motorbike.id}"></td>
+            <td th:field="${motorbike.loaixe}" th:text="${motorbike.loaixe}"></td>
+            <td th:field="${motorbike.giatri}" th:text="${motorbike.giatri}"></td>
+            <td th:field="${motorbike.bienso}" th:text="${motorbike.bienso}"></td>
+            <td th:field="${motorbike.sinhvienid}" th:text="${motorbike.sinhvienid}"></td>
+            <td><a th:href="@{/motorbike/editMotorbike(id=${motorbike.id})}">Sửa</a></td>
+            <!-- <td><a th:href="@{/motorbike/deleteMotorbike(id=${motorbike.id})}">Xóa</a></td> -->
+            <td><a th:href="@{/motorbike/deleteMotorbike(id=${motorbike.id}, loaixe=${motorbike.loaixe}, giatri=${motorbike.giatri}, bienso=${motorbike.bienso})}">Xóa</a></td>
           </tr>
         </table>
       </form>

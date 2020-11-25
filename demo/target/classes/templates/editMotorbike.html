@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Quản lý thông tin xe</title>
+    <link rel="stylesheet" href="../static/css/styles.css" th:href="@{/css/styles.css}">
+  </head>
+  <body>
+
+    <div class="header">
+      <div class="nav-container">
+        <div class="logo">
+          <img src="logo.png" class = "logo" alt="" width="120px">
+        </div>
+        <div class="navbar">
+          <nav>
+            <ul id="Menu">
+              <li><a href="login.html"><button type="button" name="button" class="btn1">Đăng xuất</button></a></li>
+              <li><a href="Q&A.html">Hỏi & đáp</a></li>
+              <li><a href="QlVX.html">Quản lý vé xe</a></li>
+              <li><a href="QlDV.html">Quản lý dịch vụ</a></li>
+              <li><a href="QlHD.html">Quản lý hợp đồng</a></li>
+              <li><a href="QlPT.html">Quản lý phòng trọ</a></li>
+              <li><a href="QlSV.html">Quản lý SV</a></li>
+              <li><a href="index.html">Trang chủ</a></li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <form class="loginForm" th:action="@{/motorbike/editMotorbike}" method="post" >
+        <h1 class="addSV">Sửa thông tin Xe</h1>
+        <table th:object="${student}">
+          <tr>
+            <td><p>ID xe: </p></td>
+            <td><input type="text" th:value="${motorbike.id}" name="id" readonly></td>
+          </tr>
+          <tr>
+            <td><p>Loại xe: </p></td>
+            <td><input type="text" th:value="${motorbike.loaixe}" name="loaixe"></td>
+          </tr>
+          <tr>
+            <td><p>Giá trị: </p></td>
+            <td><input type="text" th:value="${motorbike.giatri}" name="giatri"></td>
+          </tr>
+          <tr>
+            <td><p>Biển số: </p></td>
+            <td><input type="text" th:value="${motorbike.bienso}" name="bienso"></td>
+          </tr>
+          <tr>
+            <td><p>Chủ xe: </p></td>
+            <td>
+            <select name="sinhvienid">
+              <option th:each="student: ${students}" th:value="${student.id}" th:text="${student.studentName}"></option>
+            </select></td>
+          </tr>
+        </table>
+        <input type="submit" name="updateStudent" value="Cập nhật">
+        <input type="reset" name="reset" value="Xóa tất cả">
+        <a th:href="@{/motorbike/findMotorbike}"><input type="button" name="goBack" value="Quay lại"></a>
+      </form>
+    </div>
+
+  </body>
+</html>

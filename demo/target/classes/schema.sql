@@ -5,6 +5,17 @@ create table if not exists tblphong(
     dongia float,
     songuoi int
 );
+-- insert into tblphong(sophong,loaiphong,dongia,songuoi) values
+-- ('101','doi',1500000,3),
+-- ('102','don',1000000,1),
+-- ('201','ba',2500000,4),
+-- ('202','doi',1600000,3),
+-- ('301','doi',1500000,3),
+-- ('302','doi',1500000,3),
+-- ('401','doi',1500000,3),
+-- ('402','doi',1500000,3),
+-- ('501','doi',1500000,3),
+-- ('502','doi',1500000,3);
 
 -- create table if not exists  tblsinhvien(
 -- 	id int primary key auto_increment,
@@ -25,7 +36,9 @@ create table if not exists tbl_Student(
     id_Card varchar(50),
     DOB varchar(10),
     classroom varchar(50),
-    student_Address varchar(50)
+    student_Address varchar(50),
+    phongid int,
+    foreign key (phongid) REFERENCES tblphong(id)
 );
 -- select * from tbl_Student;
 

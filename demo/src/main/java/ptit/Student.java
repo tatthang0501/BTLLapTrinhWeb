@@ -16,19 +16,18 @@ import org.hibernate.annotations.GenericGenerator;
 
 import lombok.Data;
 
-
 @Data
 @Table(name = "tblStudent")
 @Entity
-public class Student implements Serializable{
+public class Student implements Serializable {
     /**
      *
      */
     private static final long serialVersionUID = 1L;
     @Id
-	//@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@GeneratedValue(strategy= GenerationType.AUTO,generator="native")
-    @GenericGenerator(name = "native",strategy = "native")
+    // @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
+    @GenericGenerator(name = "native", strategy = "native")
     private int id;
     @NotNull
     @Size(min = 10, message = "StudentID must be at least 10 characters long")

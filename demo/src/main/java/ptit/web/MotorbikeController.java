@@ -1,5 +1,6 @@
 package ptit.web;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,19 +23,20 @@ import ptit.data.StudentRepository;
 public class MotorbikeController {
     private final MotorbikeRepository motoRepo;
     private final StudentRepository stuRepo;
-    MotorbikeController(MotorbikeRepository motoRepo, StudentRepository stuRepo){
+
+    MotorbikeController(MotorbikeRepository motoRepo, StudentRepository stuRepo) {
         this.motoRepo = motoRepo;
         this.stuRepo = stuRepo;
     }
 
     @GetMapping
-    public String showManagerPage(){
+    public String showManagerPage() {
         return "QLXE.html";
     }
 
     @GetMapping("/addMotorbike")
-    public String addMotorbike(ServletRequest request, Model model){
-        
+    public String addMotorbike(ServletRequest request, Model model) {
+
         List<Student> listStudent = (List<Student>) stuRepo.findAll();
         model.addAttribute("students", listStudent);
         model.addAttribute("student", new Student());
@@ -42,58 +44,88 @@ public class MotorbikeController {
     }
 
     @PostMapping("/addMotorbike")
-    public String addMotorbikeProcess(ServletRequest request, Model model, Motorbike motorbike){
-        try{
+    public String addMotorbikeProcess(ServletRequest request, Model model, Motorbike motorbike) {
+        try {
             String sinhvienid = request.getParameter("sinhvienid");
             motorbike.setSinhvienid(sinhvienid);
             motoRepo.save(motorbike);
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             return "redirect:/addMotorbike?error";
         }
         return "redirect:/motorbike/findMotorbike";
     }
 
     @GetMapping("/findMotorbike")
-    public String findMotorbike(ServletRequest request, Model model){
-        try{
+    public String findMotorbike(ServletRequest request, Model model) {
+        try {
+            // DecimalFormat formatter = new DecimalFormat("###,###,###");
+
             List<Motorbike> listMoto = (List<Motorbike>) motoRepo.findAll();
-            for(Motorbike moto: listMoto){
+            for (Motorbike moto : listMoto) {
                 Student stu = stuRepo.findById(Integer.parseInt(moto.getSinhvienid())).get();
                 String studentName = stu.getStudentName();
                 moto.setSinhvienid(studentName);
+                // float giatri = Float.parseFloat(formatter.format(moto.getGiatri()));
+                // moto.setGiatri(giatri);
             }
-            model.addAttribute("motos", listMoto);
-            model.addAttribute("moto", new Motorbike());
-        }
-        catch(Exception e){
+            model.addAttribute("motorbikes", listMoto);
+            model.addAttribute("motorbike", new Motorbike());
+            model.addAttribute("student", new Student());
+        } catch (Exception e) {
             return "redirect:/findMotorbike?error";
         }
         return "findMotorbike";
     }
 
     @PostMapping("/findMotorbike")
-    public String findMotorbikeProcess(ServletRequest request, Model model, String loaixe){
-        try{
+    public String findMotorbikeProcess(ServletRequest request, Model model, String loaixe) {
+        try {
             List<Motorbike> listALlMoto = (List<Motorbike>) motoRepo.findAll();
             List<Motorbike> listMoto = new ArrayList<Motorbike>();
-            for(Motorbike moto: listALlMoto){
-                if(moto.getLoaixe().contains(loaixe)){
+            for (Motorbike moto : listALlMoto) {
+                if (moto.getLoaixe().contains(loaixe)) {
                     listMoto.add(moto);
                 }
             }
 
-            for(Motorbike moto: listMoto){
+            for (Motorbike moto : listMoto) {
                 Student stu = stuRepo.findById(Integer.parseInt(moto.getSinhvienid())).get();
                 String studentName = stu.getStudentName();
                 moto.setSinhvienid(studentName);
             }
-            model.addAttribute("motos", listMoto);
-            model.addAttribute("moto", new Motorbike());
-        }
-        catch(Exception e){
+            model.addAttribute("motorbikes", listMoto);
+            model.addAttribute("motorbike", new Motorbike());
+        } catch (Exception e) {
             return "redirect:/findMotorbike?error";
         }
         return "findMotorbike";
+    }
+
+    @GetMapping("/editMotorbike")
+    public String editMotorbike(ServletRequest request, Model model, Motorbike motorbike) {
+        Motorbike temp = motoRepo.findById(motorbike.getId()).get();
+        model.addAttribute("motorbike", temp);
+        List<Student> listAllStudent = (List<Student>) stuRepo.findAll();
+        model.addAttribute("student", new Student());
+        model.addAttribute("students", listAllStudent);
+        return "editMotorbike";
+    }
+
+    @PostMapping("/editMotorbike")
+    public String editMotorbikedo(ServletRequest request, Model model, Motorbike motorbike) {
+        try {
+            String sinhvienid = request.getParameter("sinhvienid");
+            motorbike.setSinhvienid(sinhvienid);
+            motoRepo.save(motorbike);
+        } catch (Exception e) {
+            return "redirect:/motorbike/editMotorbike?error";
+        }
+        return "redirect:/motorbike/findMotorbike";
+    }
+
+    @GetMapping("/deleteMotorbike")
+    public String deleteMotorbike(Model model, Motorbike motorbike) {
+        motoRepo.delete(motorbike);
+        return "redirect:/motorbike/findMotorbike";
     }
 }
