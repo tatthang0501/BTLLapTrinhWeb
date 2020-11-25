@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Quản lý thông tin sinh viên</title>
+    <link rel="stylesheet" href="../static/css/styles.css" th:href="@{/css/styles.css}">
+  </head>
+  <body>
+
+    <div class="header">
+      <div class="nav-container">
+        <div class="logo">
+          <img src="logo.png" class = "logo" alt="" width="120px">
+        </div>
+        <div class="navbar">
+          <nav>
+            <ul id="Menu">
+              <li><a href="login.html"><button type="button" name="button" class="btn1">Đăng xuất</button></a></li>
+              <li><a href="Q&A.html">Hỏi & đáp</a></li>
+              <li><a href="QlVX.html">Quản lý vé xe</a></li>
+              <li><a href="QlDV.html">Quản lý dịch vụ</a></li>
+              <li><a href="QlHD.html">Quản lý hợp đồng</a></li>
+              <li><a href="QlPT.html">Quản lý phòng trọ</a></li>
+              <li><a href="QLSV.html">Quản lý SV</a></li>
+              <li><a href="index.html">Trang chủ</a></li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <form class="loginForm" th:action="@{/student/addStudent}" method="POST" th:object="${room}">
+        <h1 class="addSV">Thêm sinh viên</h1>
+        <table>
+          <tr>
+            <td><p>Mã sinh viên: </p></td>
+            <td><input type="text" name="studentID" value="" placeholder="Nhập mã SV" minlength="10"></td>
+          </tr>
+          <tr>
+            <td><p>Tên: </p></td>
+            <td><input type="text" name="studentName" value="" placeholder="Nhập tên SV" minlength="5"></td>
+          </tr>
+          <tr>
+            <td><p>Số CMT/CCCD: </p></td>
+            <td><input type="text" name="idCard" value="" placeholder="Nhập số CMT" minlength="10"></td>
+          </tr>
+          <tr>
+            <td><p>Ngày sinh: </p></td>
+            <td><input type="text" name="DOB" value="" placeholder="Nhập ngày sinh"></td>
+          </tr>
+          <tr>
+            <td><p>Lớp: </p></td>
+            <td><input type="text" name="classroom" placeholder="Nhập lớp"></td>
+          </tr>
+          <tr>
+            <td><p>Địa chỉ thường trú: </p></td>
+            <td><input type="text" name="studentAddress" value="" placeholder="Nhập địa chỉ thường trú"></td>
+          </tr>
+          <tr>
+            <td><p>Phòng ở: </p></td>
+            <td>
+            <select name="phongid">
+              <option th:each="room: ${rooms}" th:value="${room.id}" th:text="${room.sophong}"></option>
+            </select></td>
+          </tr>
+        </table>
+        <input type="submit" value="Thêm">
+        <input type="reset" name="reset" value="Xóa tất cả">
+        <a th:href="@{/student}"><input type="button" name="goBack" value="Quay lại"></a>
+      </form>
+    </div>
+
+  </body>
+</html>

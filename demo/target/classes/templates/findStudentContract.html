@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Quản lý thông tin sinh viên</title>
+    <link rel="stylesheet" href="css/styles.css">
+  </head>
+  <body>
+
+    <div class="header">
+      <div class="nav-container">
+        <div class="logo">
+          <img src="logo.png" class = "logo" alt="" width="120px">
+        </div>
+        <div class="navbar">
+          <nav>
+            <ul id="Menu">
+              <li><a href="login.html"><button type="button" name="button" class="btn1">Đăng xuất</button></a></li>
+              <li><a href="Q&A.html">Hỏi & đáp</a></li>
+              <li><a href="QlVX.html">Quản lý vé xe</a></li>
+              <li><a href="QlDV.html">Quản lý dịch vụ</a></li>
+              <li><a href="QlHD.html">Quản lý hợp đồng</a></li>
+              <li><a href="QlPT.html">Quản lý phòng trọ</a></li>
+              <li><a href="QlSV.html">Quản lý SV</a></li>
+              <li><a href="index.html">Trang chủ</a></li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+
+    <div class="container stuFo">
+      <form class=" inputStudentName" action="index.html" method="post">
+        <h1 class = "addSV">Tìm sinh viên</h1>
+        <table>
+          <tr>
+            <td><p>Nhập tên SV: </p></td>
+            <td><input type="text" name="stuNameFinding" value="" placeholder="Nhập tên SV cần tìm"></td>
+          </tr>
+        </table>
+        <input type="submit" name="findStudent" value="Tìm">
+        <a href="addStudent.html"><input type="button" name="" value="Thêm"></a>
+      </form>
+
+      <form class="stuFoundForm" action="index.html" method="post">
+        <table id="stuFound">
+          <tr>
+            <th>ID</th>
+            <th>Tên</th>
+            <th>Mã SV</th>
+            <th>Ngày sinh</th>
+            <th>Lớp</th>
+            <th>Quê quán</th>
+            <th>Chọn</th>
+          </tr>
+          <tr>
+            <td>1</td>
+            <td>Nguyễn Tất Thắng</td>
+            <td>B17DCCN563</td>
+            <td>05/01/1999</td>
+            <td>D17CQCN11-B</td>
+            <td>Quỳnh Thọ - Quỳnh Phụ - Thái Bình</td>
+            <td><input type="submit" name="edit" value="Chọn"></td>
+            <!-- Chỗ này chưa xử lí, mới chỉ để demo -->
+          </tr>
+          <tr>
+            <td>1</td>
+            <td>Nguyễn Tất Thắng</td>
+            <td>B17DCCN563</td>
+            <td>05/01/1999</td>
+            <td>D17CQCN11-B</td>
+            <td>Quỳnh Thọ - Quỳnh Phụ - Thái Bình</td>
+            <td><input type="submit" name="edit" value="Chọn"></td>
+            <!-- Chỗ này chưa xử lí, mới chỉ để demo -->
+          </tr>
+        </table>
+      </form>
+    </div>
+  </body>
+</html>

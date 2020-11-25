@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Quản lý thông tin Xe</title>
+    <link rel="stylesheet" href="../static/css/styles.css" th:href="@{/css/styles.css}">
+  </head>
+  <body>
+
+    <div class="header">
+      <div class="nav-container">
+        <div class="logo">
+          <img src="logo.png" class = "logo" alt="" width="120px">
+        </div>
+        <div class="navbar">
+          <nav>
+            <ul id="Menu">
+              <li><a href="login.html"><button type="button" name="button" class="btn1">Đăng xuất</button></a></li>
+              <li><a href="Q&A.html">Hỏi & đáp</a></li>
+              <li><a href="QlVX.html">Quản lý vé xe</a></li>
+              <li><a href="QlDV.html">Quản lý dịch vụ</a></li>
+              <li><a href="QlHD.html">Quản lý hợp đồng</a></li>
+              <li><a href="QlPT.html">Quản lý phòng trọ</a></li>
+              <li><a href="QlSV.html">Quản lý SV</a></li>
+              <li><a href="index.html">Trang chủ</a></li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <form class="loginForm" th:action="@{/motorbike/addMotorbike}" method="post" th:object="${student}">
+        <h1 class="addSV">Thêm xe</h1>
+        <table>
+          <tr>
+            <td><p>Loại xe </p></td>
+            <td><input type="text" name="loaixe" value="" placeholder="Nhập loại xe"></td>
+          </tr>
+          <tr>
+            <td><p>Giá trị </p></td>
+            <td><input type="number" name="giatri" value="" placeholder="Nhập giá trị"></td>
+          </tr>
+          <tr>
+            <td><p>Biển số </p></td>
+            <td><input type="text" name="bienso" placeholder="Nhập biển số xe"></td>
+          </tr>
+          <tr>
+            <td><p>Chủ xe </p></td>
+            <td><select name="sinhvienid">
+              <option th:each="student: ${students}" th:value="${student.id}" th:text="${student.studentName}"></option>
+            </select></td>
+          </tr>
+        </table>
+        <input type="submit" value="Thêm">
+        <input type="reset" name="reset" value="Xóa tất cả">
+        <a th:href="@{/motorbike}"><input type="button" name="goBack" value="Quay lại"></a>
+      </form>
+    </div>
+
+  </body>
+</html>

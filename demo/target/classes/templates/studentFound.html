@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Quản lý thông tin sinh viên</title>
+    <link rel="stylesheet" href="../static/css/styles.css" th:href="@{/css/styles.css}">
+  </head>
+  <body>
+
+    <div class="header">
+      <div class="nav-container">
+        <div class="logo">
+          <img src="logo.png" class = "logo" alt="" width="120px">
+        </div>
+        <div class="navbar">
+          <nav>
+            <ul id="Menu">
+              <li><a href="login.html"><button type="button" name="button" class="btn1">Đăng xuất</button></a></li>
+              <li><a href="Q&A.html">Hỏi & đáp</a></li>
+              <li><a href="QlVX.html">Quản lý vé xe</a></li>
+              <li><a href="QlDV.html">Quản lý dịch vụ</a></li>
+              <li><a href="QlHD.html">Quản lý hợp đồng</a></li>
+              <li><a href="QlPT.html">Quản lý phòng trọ</a></li>
+              <li><a th:href="@{/student}">Quản lý SV</a></li>
+              <li><a href="index.html">Trang chủ</a></li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+
+    <div class="container stuFo">
+      <form class=" inputStudentName" th:action="@{/student/studentFound}" method="post">
+        <h1 class = "addSV">Tìm sinh viên</h1>
+        <table>
+          <tr>
+            <td><p>Nhập tên SV: </p></td>
+            <td><input type="text" name="studentName" th:value="${studentName}" placeholder="Nhập tên SV cần tìm"></td>
+          </tr>
+        </table>
+        <input type="submit" name="findStudent" value="Tìm">
+      </form>
+
+      <form class="stuFoundForm" action="index.html" th:object="${studentt}" method="post">
+        <table id="stuFound">
+          <tr>
+            <th>ID</th>
+            <th>Tên</th>
+            <th>Mã SV</th>
+            <th>Ngày sinh</th>
+            <th>Lớp</th>
+            <th>Quê quán</th>
+            <th>Phòng đang ở</th>
+            <th>Sửa</th>
+            <th>Xóa</th>
+          </tr>
+          <tr th:each="student: ${students}">
+            <td th:field="${student.id}" th:text="${student.id}"></td>
+            <td th:field="${student.studentName}" th:text="${student.studentName}"></td>
+            <td th:field="${student.studentID}" th:text="${student.studentID}"></td>
+            <td th:field="${student.DOB}" th:text="${student.DOB}"></td>
+            <td th:field="${student.classroom}" th:text="${student.classroom}"></td>
+            <td th:field="${student.studentAddress}" th:text="${student.studentAddress}"></td>
+            <td th:field="${student.phongid}" th:text="${student.phongid}"></td>
+            <td><a th:href="@{/student/editStudent(id=${student.id})}">Sửa</a></td>
+            <td><a th:href="@{/student/deleteStudent(id=${student.id})}">Xóa</a></td>
+          </tr>
+        </table>
+      </form>
+    </div>
+  </body>
+</html>

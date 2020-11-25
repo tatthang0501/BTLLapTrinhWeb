@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Quản lý thông tin phòng</title>
+    <link rel="stylesheet" href="css/styles.css">
+  </head>
+  <body>
+
+    <div class="header">
+      <div class="nav-container">
+        <div class="logo">
+          <img src="logo.png" class = "logo" alt="" width="120px">
+        </div>
+        <div class="navbar">
+          <nav>
+            <ul id="Menu">
+              <li><a href="login.html"><button type="button" name="button" class="btn1">Đăng xuất</button></a></li>
+              <li><a href="Q&A.html">Hỏi & đáp</a></li>
+              <li><a href="QlVX.html">Quản lý vé xe</a></li>
+              <li><a href="QlDV.html">Quản lý dịch vụ</a></li>
+              <li><a href="QlHD.html">Quản lý hợp đồng</a></li>
+              <li><a href="QlPT.html">Quản lý phòng trọ</a></li>
+              <li><a href="QlSV.html">Quản lý SV</a></li>
+              <li><a href="index.html">Trang chủ</a></li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+
+    <div class="container stuFo">
+      <form class=" inputStudentName" action="@{motorbike/findMotorbike}" method="post">
+        <h1 class = "addSV">Tìm xe</h1>
+        <table>
+          <tr>
+            <td><p>Nhập loại xe: </p></td>
+            <td><input type="text" name="loaixe" th:value="${motorbike.loaixe}" placeholder="Nhập loại xe"></td>
+          </tr>
+        </table>
+        <input type="submit" name="findService" value="Tìm">
+      </form>
+
+      <form class="stuFoundForm" action="index.html" method="post">
+        <table id="stuFound">
+          <tr>
+            <th>ID</th>
+            <th>Loại xe</th>
+            <th>Giá trị</th>
+            <th>Biển số</th>
+            <th>Chủ sở hữu</th>
+            <th>Sửa</th>
+            <th>Xóa</th>
+          </tr>
+          <tr th:each="motorbike: ${motorbikes}">
+            <td th:value="${motorbike.id}" th:text="${motorbike.id}"></td>
+            <td th:value="${motorbike.loaixe}" th:text="${motorbike.loaixe}"></td>
+            <td th:value="${motorbike.giatri}" th:text="${motorbike.giatri}"></td>
+            <td th:value="${motorbike.bienso}" th:text="${motorbike.bienso}"></td>
+            <td th:value="${motorbike.sinhvienid}" th:text="${student.studentName}"></td>
+            <td><a th:href="@{/motorbike/editMotorbike(id=${motorbike.id})}" value="Sửa"></a></td>
+            <td><a th:href="@{/motorbike/deleteMotorbike(id=${motorbike.id})}" value="Xóa"></a></td>
+          </tr>
+        </table>
+      </form>
+    </div>
+  </body>
+</html>

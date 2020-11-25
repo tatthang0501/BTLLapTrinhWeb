@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Quản lý thông tin hợp đồng</title>
+    <link rel="stylesheet" href="css/styles.css">
+  </head>
+  <body>
+
+    <div class="header">
+      <div class="nav-container">
+        <div class="logo">
+          <img src="logo.png" class = "logo" alt="" width="120px">
+        </div>
+        <div class="navbar">
+          <nav>
+            <ul id="Menu">
+              <li><a href="login.html"><button type="button" name="button" class="btn1">Đăng xuất</button></a></li>
+              <li><a href="Q&A.html">Hỏi & đáp</a></li>
+              <li><a href="QlVX.html">Quản lý vé xe</a></li>
+              <li><a href="QlDV.html">Quản lý dịch vụ</a></li>
+              <li><a href="QlHD.html">Quản lý hợp đồng</a></li>
+              <li><a href="QlPT.html">Quản lý phòng trọ</a></li>
+              <li><a href="QlSV.html">Quản lý SV</a></li>
+              <li><a href="index.html">Trang chủ</a></li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+
+    <div class="container stuFo">
+      <form class=" inputStudentName" action="index.html" method="post">
+        <h1 class = "addSV">Tìm phòng</h1>
+        <table>
+          <tr>
+            <td><p>Nhập tên sinh viên: </p></td>
+            <td><input type="text" name="roomPriceFinding" value="" placeholder="Nhập tên sinh viên"></td>
+          </tr>
+        </table>
+        <input type="submit" name="findRoom" value="Tìm">
+      </form>
+
+      <form class="stuFoundForm" action="index.html" method="post">
+        <table id="stuFound">
+          <tr>
+            <th>ID</th>
+            <th>Tên SV</th>
+            <th>Mã SV</th>
+            <th>Ngày sinh</th>
+            <th>Lớp</th>
+            <th>Số phòng</th>
+            <th>Loại phòng</th>
+            <th>Đơn giá</th>
+            <th>Số người tối đa</th>
+            <th>Sửa</th>
+            <th>Xóa</th>
+          </tr>
+          <tr>
+            <td>1</td>
+            <td>Nguyễn Tất Thắng</td>
+            <td>B17DCCN563</td>
+            <td>05/01/1999</td>
+            <td>D17CQCN11-B</td>
+            <td>101</td>
+            <td>Phòng đôi</td>
+            <td>1500000</td>
+            <td>2</td>
+            <td><input type="submit" name="edit" value="Sửa"></td>
+            <td><input type="submit" name="delete" value="Xóa"></td>
+          </tr>
+          <tr>
+            <td>1</td>
+            <td>Nguyễn Tất Thắng</td>
+            <td>B17DCCN563</td>
+            <td>05/01/1999</td>
+            <td>D17CQCN11-B</td>
+            <td>101</td>
+            <td>Phòng đôi</td>
+            <td>1500000</td>
+            <td>2</td>
+            <td><input type="submit" name="edit" value="Sửa"></td>
+            <td><input type="submit" name="delete" value="Xóa"></td>
+          </tr>
+        </table>
+      </form>
+    </div>
+  </body>
+</html>
