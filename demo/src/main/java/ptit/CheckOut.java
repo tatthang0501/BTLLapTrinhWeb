@@ -1,11 +1,26 @@
-// package ptit;
+package ptit;
 
-// import javax.persistence.Entity;
+import java.util.Date;
 
-// import lombok.Data;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.PrePersist;
+import javax.validation.constraints.NotNull;
 
-// @Entity
-// @Data
-// public class CheckOut {
-    
-// }
+import lombok.Data;
+
+@Entity
+@Data
+public class CheckOut {
+    @Id
+    private int id;
+    @NotNull
+    private Date thoigian;
+    @NotNull
+    private int checkinid;
+
+    @PrePersist
+    void thoigian(){
+        this.thoigian = new Date();
+    }
+}

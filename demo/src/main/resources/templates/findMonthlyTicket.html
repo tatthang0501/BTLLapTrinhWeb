@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Quản lý thông tin sinh viên</title>
+    <link rel="stylesheet" href="../static/css/styles.css" th:href="@{/css/styles.css}">
+  </head>
+  <body>
+
+    <div class="header">
+      <div class="nav-container">
+        <div class="logo">
+          <img src="logo.png" class = "logo" alt="" width="120px">
+        </div>
+        <div class="navbar">
+          <nav>
+            <ul id="Menu">
+              <li><a href="login.html"><button type="button" name="button" class="btn1">Đăng xuất</button></a></li>
+              <li><a href="Q&A.html">Hỏi & đáp</a></li>
+              <li><a href="QlVX.html">Quản lý vé xe</a></li>
+              <li><a href="QlDV.html">Quản lý dịch vụ</a></li>
+              <li><a href="QlHD.html">Quản lý hợp đồng</a></li>
+              <li><a href="QlPT.html">Quản lý phòng trọ</a></li>
+              <li><a href="QlSV.html">Quản lý SV</a></li>
+              <li><a href="index.html">Trang chủ</a></li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+
+    <div class="container stuFo">
+      <form class=" inputStudentName" th:action="@{/ticket/findMonthlyTicket}" method="post">
+        <h1 class = "addSV">Tìm vé xe tháng</h1>
+        <table>
+          <tr>
+            <td><p>Nhập tên SV: </p></td>
+            <td><input type="text" name="bienso" th:value="${bienso}" placeholder="Nhập biển số xe cần tìm"></td>
+          </tr>
+        </table>
+        <input type="submit" name="findStudent" value="Tìm">
+      </form>
+
+      <form class="stuFoundForm" action="index.html" method="post">
+        <table id="stuFound">
+          <tr>
+            <th>ID</th>
+            <th>Tên sinh viên</th>
+            <th>Mã SV</th>
+            <th>Tháng</th>
+            <th>Biển số xe</th>
+            <th>Sửa</th>
+            <th>Xóa</th>
+          </tr>
+          <tr th:each="ticDisplay: ${ticsDisplay}">
+            <td th:field="${ticDisplay.id}" th:text="${ticDisplay.id}"></td>
+            <td th:field="${ticDisplay.studentName}" th:text="${ticDisplay.studentName}"></td>
+            <td th:field="${ticDisplay.studentID}" th:text="${ticDisplay.studentID}"></td>
+            <td th:field="${ticDisplay.month}" th:text="${ticDisplay.month}"></td>
+            <td th:field="${ticDisplay.motorbikeID}" th:text="${ticDisplay.motorbikeID}"></td>
+            <td><a th:href="@{/ticket/editTicket(id=${ticDisplay.id})}">Sửa</a></td>
+            <td><a th:href="@{/ticket/deleteTicket(id=${ticDisplay.id})}">Xóa</a></td>
+          </tr>
+        </table>
+      </form>
+    </div>
+  </body>
+</html>

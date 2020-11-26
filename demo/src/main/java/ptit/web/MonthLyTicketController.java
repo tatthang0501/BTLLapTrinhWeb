@@ -2,11 +2,13 @@ package ptit.web;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import javax.servlet.ServletRequest;
 
+import org.hibernate.annotations.SourceType;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import ptit.MonthlyTicket;
+import ptit.MonthlyTicketDisplay;
 import ptit.Motorbike;
 import ptit.Student;
 import ptit.data.MonthlyTicketRepository;
@@ -72,10 +75,62 @@ public class MonthLyTicketController {
 
     @GetMapping("/findMonthlyTicket")
     public String findTicket(Model model){
-        try{
+        List<MonthlyTicket> listTicket = (List<MonthlyTicket>) ticketRepo.findAll();
+        List<MonthlyTicketDisplay> listTicketDisplay = new ArrayList<MonthlyTicketDisplay>();
 
+        for(MonthlyTicket ticket: listTicket){
+            MonthlyTicketDisplay ticketDisplay = new MonthlyTicketDisplay();
+            ticketDisplay.setId(ticket.getId());
+
+            Student student = stuRepo.findById(ticket.getSinhvienid()).get();
+            ticketDisplay.setStudentID(student.getStudentID());
+            ticketDisplay.setStudentName(student.getStudentName());
+
+            ticketDisplay.setMonth(ticket.getThang());
+
+            Motorbike moto = motoRepo.findById(ticket.getXeid()).get();
+            ticketDisplay.setMotorbikeID(moto.getBienso());
+
+            listTicketDisplay.add(ticketDisplay);
         }
-        catch(Exception ex){
+        model.addAttribute("ticsDisplay", listTicketDisplay);
+        model.addAttribute("ticDisplay", new MonthlyTicketDisplay());
+        return "findMonthlyTicket";
+    }
+    
+
+    @PostMapping("/findMonthlyTicket")
+    public String findTicketProcess(ServletRequest request, Model model, String bienso){
+        try{
+             List<Motorbike> listMoto = (List<Motorbike>) motoRepo.findByLicense(bienso);
+             List<MonthlyTicket> listTicket = new ArrayList<MonthlyTicket>();
+             for(Motorbike moto : listMoto){
+                 MonthlyTicket ticket = ticketRepo.findByMotoId(moto.getId());
+                 listTicket.add(ticket);
+             }
+
+        List<MonthlyTicketDisplay> listTicketDisplay = new ArrayList<MonthlyTicketDisplay>();
+
+        for(MonthlyTicket ticket: listTicket){
+            MonthlyTicketDisplay ticketDisplay = new MonthlyTicketDisplay();
+            ticketDisplay.setId(ticket.getId());
+
+            Student student = stuRepo.findById(ticket.getSinhvienid()).get();
+            ticketDisplay.setStudentID(student.getStudentID());
+            ticketDisplay.setStudentName(student.getStudentName());
+
+            ticketDisplay.setMonth(ticket.getThang());
+
+            Motorbike moto = motoRepo.findById(ticket.getXeid()).get();
+            ticketDisplay.setMotorbikeID(moto.getBienso());
+
+            listTicketDisplay.add(ticketDisplay);
+            }
+        model.addAttribute("ticsDisplay", listTicketDisplay);
+        model.addAttribute("ticDisplay", new MonthlyTicketDisplay());
+        model.addAttribute("bienso", bienso);
+        }
+        catch(Exception e){
             return "redirect:/findMonthlyTicket?error";
         }
         return "findMonthlyTicket";
