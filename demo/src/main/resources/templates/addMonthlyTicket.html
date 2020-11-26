@@ -34,19 +34,19 @@
         <h1 class="addSV">Thêm vé xe</h1>
         <table>
           <tr>
-            <td>Chủ xe </td>
+            <td><p>Chủ xe</p></td>
             <td><select name="sinhvienid">
               <option th:each="student: ${students}" th:value="${student.id}" th:text="${student.studentName}"></option>
             </select></td>
           </tr>
           <tr>
-            <td>Chọn tháng </td>
+            <td><p>Chọn tháng</p></td>
             <td><select name="thang" id="">
               <option th:each="i: ${#numbers.sequence(month,12)}" th:value="${i}" th:text="${i}"></option>
             </select></td>
           </tr>
           <tr>
-            <td>Chọn xe </td>
+            <td><p>Chọn xe</p></td>
             <td><select name="xeid" id="">
               <option th:each="motorbike: ${motorbikes}" th:value="${motorbike.id}" th:text="${motorbike.bienso}"></option>
             </select></td>

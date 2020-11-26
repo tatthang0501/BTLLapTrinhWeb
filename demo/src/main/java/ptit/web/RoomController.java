@@ -27,7 +27,7 @@ import ptit.data.RoomRepository;
 
 @Slf4j
 @Controller
-@RequestMapping("/QLPT.html")
+@RequestMapping("/room")
 public class RoomController {
     private final RoomRepository roomRepo;
 
@@ -93,12 +93,12 @@ public class RoomController {
             List<Room> rooms = (List<Room>) roomRepo.findAll();
             model.addAttribute("rooms", rooms);
             model.addAttribute("search", new Room());
-            return "redirect:/QLPT.htmlroomSearch?error";
+            return "redirect:/room/roomSearch?error";
         }
         List<Room> rooms = (List<Room>) roomRepo.findAll();
         model.addAttribute("rooms", rooms);
         model.addAttribute("search", new Room());
-        return "redirect:/QLPT.html/roomSearch?error";
+        return "redirect:/room/roomSearch";
     }
 
     @PostMapping("/roomSearch")
@@ -131,7 +131,7 @@ public class RoomController {
                 rooms.add(r);
             }
         }
-        return "redirect:/QLPT.html/roomSearch";
+        return "redirect:/room/roomSearch";
     }
 
     @PostMapping("/addRoom")
@@ -139,9 +139,9 @@ public class RoomController {
         try {
             roomRepo.save(room);
         } catch (Exception e) {
-            return "redirect:/QLPT.html/addRoom?error";
+            return "redirect:/room/addRoom?error";
         }
-        return "redirect:/QLPT.html/roomSearch";
+        return "redirect:/room/roomSearch";
     }
 
 }

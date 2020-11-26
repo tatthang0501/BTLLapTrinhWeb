@@ -11,6 +11,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import ptit.MonthlyTicket;
@@ -50,5 +51,33 @@ public class MonthLyTicketController {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM");
         model.addAttribute("month", Integer.parseInt(dtf.format(date)));
         return "addMonthlyTicket";
+    }
+
+    @PostMapping("/addMonthlyTicket")
+    public String addMonthlyTicketProcess(ServletRequest request, Model model, MonthlyTicket ticket){
+        try{
+            String sinhvienid = request.getParameter("sinhvienid");
+            String thang = request.getParameter("thang");
+            String xeid = request.getParameter("xeid");
+            ticket.setSinhvienid(Integer.parseInt(sinhvienid));
+            ticket.setThang(Integer.parseInt(thang));
+            ticket.setXeid(Integer.parseInt(xeid));
+            ticketRepo.save(ticket);
+        }
+        catch(Exception ex){
+            return "redirect:/addMonthlyTicket?error";
+        }
+        return "redirect:/ticket/findMonthlyTicket";
+    }
+
+    @GetMapping("/findMonthlyTicket")
+    public String findTicket(Model model){
+        try{
+
+        }
+        catch(Exception ex){
+            return "redirect:/findMonthlyTicket?error";
+        }
+        return "findMonthlyTicket";
     }
 }
