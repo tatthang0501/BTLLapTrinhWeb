@@ -51,6 +51,7 @@
             <th>Chủ sở hữu</th>
             <th>Sửa</th>
             <th>Xóa</th>
+            <th>CheckIn</th>
           </tr>
           <tr th:each="motorbike: ${motorbikes}">
             <td th:field="${motorbike.id}" th:text="${motorbike.id}"></td>
@@ -59,10 +60,8 @@
             <td th:field="${motorbike.bienso}" th:text="${motorbike.bienso}"></td>
             <td th:field="${motorbike.sinhvienid}" th:text="${motorbike.sinhvienid}"></td>
             <td><a th:href="@{/motorbike/editMotorbike(id=${motorbike.id})}">Sửa</a></td>
-            <!-- <td><a th:href="@{/motorbike/deleteMotorbike(id=${motorbike.id})}">Xóa</a></td> -->
             <td><a th:href="@{/motorbike/deleteMotorbike(id=${motorbike.id}, loaixe=${motorbike.loaixe}, giatri=${motorbike.giatri}, bienso=${motorbike.bienso})}">Xóa</a></td>
-            <td><a th:href="@{/checkIn/checkInMotorbike(id=${motorbike.id})}">CheckIn</a></td>
-            <td><a th:href="@{checkOut/checkOutMotorbike(id=${motorbike.id})}">CheckOut</a></td>
+            <td><a th:href="@{/check/checkIn(id=${motorbike.id})}">CheckIn</a></td>
           </tr>
         </table>
       </form>
