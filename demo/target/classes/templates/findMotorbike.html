@@ -61,6 +61,8 @@
             <td><a th:href="@{/motorbike/editMotorbike(id=${motorbike.id})}">Sửa</a></td>
             <!-- <td><a th:href="@{/motorbike/deleteMotorbike(id=${motorbike.id})}">Xóa</a></td> -->
             <td><a th:href="@{/motorbike/deleteMotorbike(id=${motorbike.id}, loaixe=${motorbike.loaixe}, giatri=${motorbike.giatri}, bienso=${motorbike.bienso})}">Xóa</a></td>
+            <td><a th:href="@{/checkIn/checkInMotorbike(id=${motorbike.id})}">CheckIn</a></td>
+            <td><a th:href="@{checkOut/checkOutMotorbike(id=${motorbike.id})}">CheckOut</a></td>
           </tr>
         </table>
       </form>
