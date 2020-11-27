@@ -58,8 +58,8 @@
             <td th:field="${ticDisplay.studentID}" th:text="${ticDisplay.studentID}"></td>
             <td th:field="${ticDisplay.month}" th:text="${ticDisplay.month}"></td>
             <td th:field="${ticDisplay.motorbikeID}" th:text="${ticDisplay.motorbikeID}"></td>
-            <td><a th:href="@{/ticket/editTicket(id=${ticDisplay.id})}">Sửa</a></td>
-            <td><a th:href="@{/ticket/deleteTicket(id=${ticDisplay.id})}">Xóa</a></td>
+            <td><a th:href="@{/ticket/editMonthlyTicket(id=${ticDisplay.id})}">Sửa</a></td>
+            <td><a th:href="@{/ticket/deleteMonthlyTicket(id=${ticDisplay.id})}">Xóa</a></td>
           </tr>
         </table>
       </form>

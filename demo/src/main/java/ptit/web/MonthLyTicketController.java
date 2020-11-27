@@ -102,10 +102,10 @@ public class MonthLyTicketController {
     @PostMapping("/findMonthlyTicket")
     public String findTicketProcess(ServletRequest request, Model model, String bienso){
         try{
-             List<Motorbike> listMoto = (List<Motorbike>) motoRepo.findByLicense(bienso);
+             List<Motorbike> listMoto = (List<Motorbike>) motoRepo.findBybienso(bienso);
              List<MonthlyTicket> listTicket = new ArrayList<MonthlyTicket>();
              for(Motorbike moto : listMoto){
-                 MonthlyTicket ticket = ticketRepo.findByMotoId(moto.getId());
+                 MonthlyTicket ticket = ticketRepo.findByxeid(moto.getId());
                  listTicket.add(ticket);
              }
 
@@ -134,5 +134,47 @@ public class MonthLyTicketController {
             return "redirect:/findMonthlyTicket?error";
         }
         return "findMonthlyTicket";
+    }
+
+    @GetMapping("/editMonthlyTicket")
+    public String editMonthlyTicket(ServletRequest request, Model model, MonthlyTicket ticket){
+        try{
+            MonthlyTicket temp = ticketRepo.findById(ticket.getId()).get();
+            List<Student> listStudent = (List<Student>) stuRepo.findAll();
+            List<Motorbike> listMoto = (List<Motorbike>) motoRepo.findAll();
+            model.addAttribute("ticket", temp);
+            model.addAttribute("students", listStudent);
+            model.addAttribute("motorbikes", listMoto);
+            model.addAttribute("student", new Student());
+            model.addAttribute("motorbike", new Motorbike());
+            LocalDate date = LocalDate.now();
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM");
+            model.addAttribute("month", Integer.parseInt(dtf.format(date)));
+        }
+        catch(Exception e){
+            return "redirect:/ticket/editMonthlyTicket?error";
+        }
+        return "editMonthlyTicket";
+    }
+    @PostMapping("/editMonthlyTicket")
+    public String editMonthlyTicketProcess(ServletRequest request, Model model, MonthlyTicket ticket){
+        try{
+            ticketRepo.save(ticket);
+            return "redirect:/ticket/findMonthlyTicket";
+        }
+        catch(Exception e){
+            return "redirect:/ticket/editMonthlyTicket?error";
+        }
+    }
+
+    @GetMapping("/deleteMonthlyTicket")
+    public String deleteMonthlyTicket(ServletRequest request, Model model, MonthlyTicket ticket){
+        try{
+            ticketRepo.delete(ticket);
+            return "redirect:/ticket/findMonthlyTicket";
+        }
+        catch(Exception e){
+            return "redirect:/ticket/editMonthlyTicket?error";
+        }
     }
 }
