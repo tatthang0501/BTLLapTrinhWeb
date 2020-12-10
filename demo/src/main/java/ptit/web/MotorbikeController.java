@@ -47,7 +47,9 @@ public class MotorbikeController {
     public String addMotorbikeProcess(ServletRequest request, Model model, Motorbike motorbike) {
         try {
             String sinhvienid = request.getParameter("sinhvienid");
-            motorbike.setSinhvienid(sinhvienid);
+            Student student = new Student();
+            student.setId(Integer.parseInt(sinhvienid));
+            motorbike.setStudent(student);
             motoRepo.save(motorbike);
         } catch (Exception e) {
             return "redirect:/addMotorbike?error";

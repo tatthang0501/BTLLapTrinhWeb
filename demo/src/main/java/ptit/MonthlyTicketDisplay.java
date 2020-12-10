@@ -5,8 +5,7 @@ import lombok.Data;
 @Data
 public class MonthlyTicketDisplay {
     private int id;
-    private String studentName;
-    private String studentID;
+    private Student student;
     private int month;
-    private String motorbikeID;
+    private Motorbike motorbike;
 }

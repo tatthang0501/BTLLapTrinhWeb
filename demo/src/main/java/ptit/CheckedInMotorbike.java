@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class CheckedInMotorbike {
     private int id;
-    private String bienso;
+    private Motorbike motorbike;
     private String thoigian;
     private int fee;
 }

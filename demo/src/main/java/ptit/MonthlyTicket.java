@@ -14,9 +14,9 @@ public class MonthlyTicket {
     @Id
     private int id;
     @NotNull
-    private int sinhvienid;
+    private Student student;
     @NotNull
     private int thang;
     @NotNull
-    private int xeid;
+    private Motorbike motorbike;
 }

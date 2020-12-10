@@ -41,5 +41,5 @@ public class Student implements Serializable {
     private String DOB;
     private String classroom;
     private String studentAddress;
-    private String phongid;
+    private Room room;
 }

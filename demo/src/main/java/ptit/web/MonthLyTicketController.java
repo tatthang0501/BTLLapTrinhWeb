@@ -62,9 +62,13 @@ public class MonthLyTicketController {
             String sinhvienid = request.getParameter("sinhvienid");
             String thang = request.getParameter("thang");
             String xeid = request.getParameter("xeid");
-            ticket.setSinhvienid(Integer.parseInt(sinhvienid));
+            Student student = new Student();
+            student.setId(Integer.parseInt(sinhvienid));
+            ticket.setStudent(student);
             ticket.setThang(Integer.parseInt(thang));
-            ticket.setXeid(Integer.parseInt(xeid));
+            Motorbike motorbike = new Motorbike();
+            motorbike.setId(Integer.parseInt(xeid));
+            ticket.setMotorbike(motorbike);
             ticketRepo.save(ticket);
         }
         catch(Exception ex){
@@ -76,25 +80,24 @@ public class MonthLyTicketController {
     @GetMapping("/findMonthlyTicket")
     public String findTicket(Model model){
         List<MonthlyTicket> listTicket = (List<MonthlyTicket>) ticketRepo.findAll();
-        List<MonthlyTicketDisplay> listTicketDisplay = new ArrayList<MonthlyTicketDisplay>();
 
-        for(MonthlyTicket ticket: listTicket){
-            MonthlyTicketDisplay ticketDisplay = new MonthlyTicketDisplay();
-            ticketDisplay.setId(ticket.getId());
+        // for(MonthlyTicket ticket: listTicket){
+        //     MonthlyTicketDisplay ticketDisplay = new MonthlyTicketDisplay();
+        //     ticketDisplay.setId(ticket.getId());
 
-            Student student = stuRepo.findById(ticket.getSinhvienid()).get();
-            ticketDisplay.setStudentID(student.getStudentID());
-            ticketDisplay.setStudentName(student.getStudentName());
+        //     Student student = stuRepo.findById(ticket.getSinhvienid()).get();
+        //     ticketDisplay.setStudentID(student.getStudentID());
+        //     ticketDisplay.setStudentName(student.getStudentName());
 
-            ticketDisplay.setMonth(ticket.getThang());
+        //     ticketDisplay.setMonth(ticket.getThang());
 
-            Motorbike moto = motoRepo.findById(ticket.getXeid()).get();
-            ticketDisplay.setMotorbikeID(moto.getBienso());
+        //     Motorbike moto = motoRepo.findById(ticket.getXeid()).get();
+        //     ticketDisplay.setMotorbikeID(moto.getBienso());
 
-            listTicketDisplay.add(ticketDisplay);
-        }
-        model.addAttribute("ticsDisplay", listTicketDisplay);
-        model.addAttribute("ticDisplay", new MonthlyTicketDisplay());
+        //     listTicketDisplay.add(ticketDisplay);
+        // }
+        model.addAttribute("ticsDisplay", listTicket);
+        model.addAttribute("ticDisplay", new MonthlyTicket());
         return "findMonthlyTicket";
     }
     
@@ -109,25 +112,25 @@ public class MonthLyTicketController {
                  listTicket.add(ticket);
              }
 
-        List<MonthlyTicketDisplay> listTicketDisplay = new ArrayList<MonthlyTicketDisplay>();
+        // List<MonthlyTicketDisplay> listTicketDisplay = new ArrayList<MonthlyTicketDisplay>();
 
-        for(MonthlyTicket ticket: listTicket){
-            MonthlyTicketDisplay ticketDisplay = new MonthlyTicketDisplay();
-            ticketDisplay.setId(ticket.getId());
+        // for(MonthlyTicket ticket: listTicket){
+        //     MonthlyTicketDisplay ticketDisplay = new MonthlyTicketDisplay();
+        //     ticketDisplay.setId(ticket.getId());
 
-            Student student = stuRepo.findById(ticket.getSinhvienid()).get();
-            ticketDisplay.setStudentID(student.getStudentID());
-            ticketDisplay.setStudentName(student.getStudentName());
+        //     Student student = stuRepo.findById(ticket.getSinhvienid()).get();
+        //     ticketDisplay.setStudentID(student.getStudentID());
+        //     ticketDisplay.setStudentName(student.getStudentName());
 
-            ticketDisplay.setMonth(ticket.getThang());
+        //     ticketDisplay.setMonth(ticket.getThang());
 
-            Motorbike moto = motoRepo.findById(ticket.getXeid()).get();
-            ticketDisplay.setMotorbikeID(moto.getBienso());
+        //     Motorbike moto = motoRepo.findById(ticket.getXeid()).get();
+        //     ticketDisplay.setMotorbikeID(moto.getBienso());
 
-            listTicketDisplay.add(ticketDisplay);
-            }
-        model.addAttribute("ticsDisplay", listTicketDisplay);
-        model.addAttribute("ticDisplay", new MonthlyTicketDisplay());
+        //     listTicketDisplay.add(ticketDisplay);
+        //     }
+        model.addAttribute("ticsDisplay", listTicket);
+        model.addAttribute("ticDisplay", new MonthlyTicket());
         model.addAttribute("bienso", bienso);
         }
         catch(Exception e){

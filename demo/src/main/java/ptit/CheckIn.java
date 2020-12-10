@@ -17,7 +17,7 @@ public class CheckIn {
     @Id
     private int id;
     private Date thoigian;
-    private int xeid;
+    private Motorbike motorbike;
 
     @PrePersist
     void thoigian(){

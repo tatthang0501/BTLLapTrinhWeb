@@ -20,5 +20,5 @@ public class Motorbike {
     @NotNull
     private String bienso;
     @NotNull
-    private String sinhvienid;
+    private Student student;
 }

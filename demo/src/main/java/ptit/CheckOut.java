@@ -17,7 +17,7 @@ public class CheckOut {
     @NotNull
     private Date thoigian;
     @NotNull
-    private int checkinid;
+    private CheckIn checkIn;
 
     @PrePersist
     void thoigian(){
