@@ -17,7 +17,7 @@
           </tr>
           <tr>
             <td><p>Nhập khoảng giá tiền: </p></td>
-            <td><input type="number" name="roomPriceFinding" th:field="*{dongia}" placeholder="Nhập khoảng giá tiền phòng"></td>
+            <td><input type="number" name="roomPriceFinding" th:field="*{price}" placeholder="Nhập khoảng giá tiền phòng"></td>
           </tr>
         </table>
         <input type="submit" name="findRoom" value="Tìm">
@@ -37,10 +37,10 @@
           <div th:each="room: ${rooms}">
             <tr>
               <td th:text="${room.id}"></td>
-              <td th:text="${room.sophong}"></td>
-              <td th:text="${room.loaiphong}"></td>
-              <td th:text="${room.dongia}"></td>
-              <td th:text="${room.songuoi}"></td>
+              <td th:text="${room.roomNumber}"></td>
+              <td th:text="${room.type}"></td>
+              <td th:text="${room.price}"></td>
+              <td th:text="${room.amountPeople}"></td>
               <th><a th:href="@{/room/roomEdit(id=${room.id})}">Sửa</a></th>
               <th><a th:href="@{/room/delete(id=${room.id})}">Xóa</a></th>
             </tr>

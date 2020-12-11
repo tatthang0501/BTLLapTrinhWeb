@@ -60,7 +60,7 @@ public class StudentController {
         try {
             String phongid = request.getParameter("phongid");
             Room room = new Room();
-            room.setId(phongid);
+            room.setId(Long.parseLong(phongid));
             student.setRoom(room);
             stuRepo.save(student);
         } catch (Exception e) {
@@ -115,7 +115,7 @@ public class StudentController {
     public String editStudentProcess(ServletRequest request, ServletResponse response, Student student) {
         try {
             String phongid = request.getParameter("phongid");
-            Room room = roomRepo.findById(phongid).get();
+            Room room = roomRepo.findById(Long.parseLong(phongid)).get();
             student.setRoom(room);
             stuRepo.save(student);
         } catch (Exception e) {

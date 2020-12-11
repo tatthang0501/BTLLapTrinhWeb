@@ -17,7 +17,7 @@ import javax.persistence.*;
 public class Room {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String id;
+    private Long id;
     @NotNull
     @Column(name = "roomnumber")
     private String roomNumber;

@@ -109,7 +109,7 @@ public class RoomController {
         List<Room> allRooms = (List<Room>) roomRepo.findAll();
         List<Room> rooms = new ArrayList<>();
         for (Room r : allRooms) {
-            if (r.getDongia() <= room.getDongia()) {
+            if (r.getPrice() <= room.getPrice()) {
                 rooms.add(r);
             }
         }
@@ -121,15 +121,15 @@ public class RoomController {
     @PostMapping("/roomEdit")
     public String processEdit(Room room, Model model) {
         Boolean valid = true;
-        if (room.getDongia() <= 0 || room.getSonguoi() <= 0) {
+        if (room.getPrice() <= 0 || room.getAmountPeople() <= 0) {
             valid = false;
         }
         if (valid == true) {
             Room roomB4 = roomRepo.findById(room.getId()).get();
-            roomB4.setDongia(room.getDongia());
-            roomB4.setLoaiphong(room.getLoaiphong());
-            roomB4.setSonguoi(room.getSonguoi());
-            roomB4.setSophong(room.getSophong());
+            roomB4.setPrice(room.getPrice());
+            roomB4.setType(room.getType());
+            roomB4.setAmountPeople(room.getAmountPeople());
+            roomB4.setRoomNumber(room.getRoomNumber());
             try {
                 roomRepo.save(roomB4);
             } catch (Exception e) {
@@ -145,7 +145,7 @@ public class RoomController {
     @PostMapping("/addRoom")
     public String processAdd(Room room) {
         Boolean valid = true;
-        if (room.getDongia() <= 0 || room.getSonguoi() <= 0) {
+        if (room.getPrice() <= 0 || room.getAmountPeople() <= 0) {
             valid = false;
         }
         if (valid == true) {
