@@ -52,8 +52,8 @@
           </tr>
           <tr th:each="checkedIn: ${listCheckedIn}">
             <td th:field="${checkedIn.id}" th:text="${checkedIn.id}"></td>
-            <td th:field="${checkedIn.bienso}" th:text="${checkedIn.bienso}"></td>
-            <td th:field="${checkedIn.thoigian}" th:text="${checkedIn.thoigian}"></td>
+            <td th:field="${checkedIn.motorbike.motorbikeName}" th:text="${checkedIn.motorbike.motorbikeName}"></td>
+            <td th:field="${checkedIn.time}" th:text="${checkedIn.time}"></td>
             <td th:field="${checkedIn.fee}" th:text="${checkedIn.fee}"></td>
             <td><a th:href="@{/check/checkOut(id=${checkedIn.id})}">CheckOut</a></td>
           </tr>

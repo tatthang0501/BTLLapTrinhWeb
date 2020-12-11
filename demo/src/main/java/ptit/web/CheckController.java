@@ -36,9 +36,7 @@ public class CheckController {
 
     public boolean CheckIfCheckMoreThan2Times(int id){
         boolean check = false;
-        LocalDate today = LocalDate.now();
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        List<CheckIn> list = (List<CheckIn>) checkinRepo.findCheckInToday(dtf.format(today), id);
+        List<CheckIn> list = (List<CheckIn>) checkinRepo.findCheckInToday(new Date(), id);
         int checkInCount = list.size();
         if(checkInCount > 2){
             check = true;
