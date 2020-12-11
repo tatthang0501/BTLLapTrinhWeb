@@ -4,6 +4,7 @@ import java.io.Serializable;
 // import java.util.Date;
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,7 +20,7 @@ import org.hibernate.annotations.GenericGenerator;
 import lombok.Data;
 
 @Data
-@Table(name = "tblStudent")
+@Table(name = "tblstudent")
 @Entity
 public class Student implements Serializable {
     /**
@@ -33,18 +34,24 @@ public class Student implements Serializable {
     private int id;
     @NotNull
     @Size(min = 10, message = "StudentID must be at least 10 characters long")
+    @Column(name = "studentid")
     private String studentID;
     @NotNull
     @Size(min = 5, message = "Name must be at least 5 characters long")
+    @Column(name = "studentname")
     private String studentName;
     @NotNull
     @Size(min = 10, message = "IDCardNumber must be at least 10 characters long")
+    @Column(name = "idcard")
     private String idCard;
+    @Column(name = "dob")
     private String DOB;
+    @Column(name = "classroom")
     private String classroom;
+    @Column(name = "studentaddress")
     private String studentAddress;
 
     @OneToOne
-    @JoinColumn(name = "phongid")
+    @JoinColumn(name = "roomid")
     private Room room;
 }

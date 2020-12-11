@@ -35,7 +35,7 @@
         <table>
           <tr>
             <td><p>Nhập tên SV: </p></td>
-            <td><input type="text" name="bienso" th:value="${bienso}" placeholder="Nhập biển số xe cần tìm"></td>
+            <td><input type="text" name="licensePlates" th:value="${licensePlates}" placeholder="Nhập biển số xe cần tìm"></td>
           </tr>
         </table>
         <input type="submit" name="findStudent" value="Tìm">
@@ -56,8 +56,8 @@
             <td th:field="${ticDisplay.id}" th:text="${ticDisplay.id}"></td>
             <td th:field="${ticDisplay.student.studentName}" th:text="${ticDisplay.student.studentName}"></td>
             <td th:field="${ticDisplay.student.studentID}" th:text="${ticDisplay.student.studentID}"></td>
-            <td th:field="${ticDisplay.thang}" th:text="${ticDisplay.thang}"></td>
-            <td th:field="${ticDisplay.motorbike.bienso}" th:text="${ticDisplay.motorbike.bienso}"></td>
+            <td th:field="${ticDisplay.month}" th:text="${ticDisplay.month}"></td>
+            <td th:field="${ticDisplay.motorbike.licensePlates}" th:text="${ticDisplay.motorbike.licensePlates}"></td>
             <td><a th:href="@{/ticket/editMonthlyTicket(id=${ticDisplay.id})}">Sửa</a></td>
             <td><a th:href="@{/ticket/deleteMonthlyTicket(id=${ticDisplay.id})}">Xóa</a></td>
           </tr>

@@ -16,6 +16,6 @@ public interface MonthlyTicketRepository extends CrudRepository<MonthlyTicket,In
 
     @Transactional
     @Modifying
-    @Query(value="DELETE FROM tblmonthly WHERE tblmonthly.sinhvienid = ?1",nativeQuery=true)
+    @Query(value="DELETE FROM tblmonthlyticket WHERE tblmonthlyticket.studentid = ?1",nativeQuery=true)
     void deleteByStudentId(int sinhvienid);
 }

@@ -39,20 +39,20 @@
           </tr>
           <tr>
             <td><p>Loại xe: </p></td>
-            <td><input type="text" th:value="${motorbike.loaixe}" name="loaixe"></td>
+            <td><input type="text" th:value="${motorbike.motorbikeName}" name="motorbikeName"></td>
           </tr>
           <tr>
             <td><p>Giá trị: </p></td>
-            <td><input type="text" th:value="${motorbike.giatri}" name="giatri"></td>
+            <td><input type="text" th:value="${motorbike.price}" name="price"></td>
           </tr>
           <tr>
             <td><p>Biển số: </p></td>
-            <td><input type="text" th:value="${motorbike.bienso}" name="bienso"></td>
+            <td><input type="text" th:value="${motorbike.licensePlates}" name="licensePlates"></td>
           </tr>
           <tr>
             <td><p>Chủ xe: </p></td>
             <td>
-            <select name="sinhvienid">
+            <select name="studentid">
               <option th:each="student: ${students}" th:value="${student.id}" th:text="${student.studentName}"></option>
             </select></td>
           </tr>

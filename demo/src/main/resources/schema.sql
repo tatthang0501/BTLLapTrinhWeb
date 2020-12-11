@@ -1,116 +1,155 @@
-create table if not exists tblphong(
+drop database dormdb;
+create database dormdb CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+use dormdb;
+
+select * from tblRoom;
+
+create table tblRoom(
 	id int primary key auto_increment,
-    sophong varchar(50),
-    loaiphong varchar(50),
-    dongia float,
-    songuoi int
+    roomNumber varchar(50),
+    `type` varchar(50),
+    price float,
+    amountPeople int
 );
--- insert into tblphong(sophong,loaiphong,dongia,songuoi) values
--- ('101','doi',1500000,3),
--- ('102','don',1000000,1),
--- ('201','ba',2500000,4),
--- ('202','doi',1600000,3),
--- ('301','doi',1500000,3),
--- ('302','doi',1500000,3),
--- ('401','doi',1500000,3),
--- ('402','doi',1500000,3),
--- ('501','doi',1500000,3),
--- ('502','doi',1500000,3);
 
--- create table if not exists  tblsinhvien(
--- 	id int primary key auto_increment,
---     masv varchar(50),
---     ten varchar(50),
---     socmt varchar(50),
---     ngaysinh date,
---     lop varchar(50),
---     quequan varchar(50),
---     phongid int,
---     foreign key (phongid) references tblphong(id)
--- );
-
-create table if not exists tbl_Student(
+create table tblStudent(
 	id int primary key auto_increment,
     studentID varchar(50),
-    student_Name varchar(50),
-    id_Card varchar(50),
-    DOB varchar(10),
+    studentName varchar(50),
+    idCard varchar(50),
+    dob date,
     classroom varchar(50),
-    student_Address varchar(50),
-    phongid int,
-    foreign key (phongid) REFERENCES tblphong(id)
-);
--- select * from tbl_Student;
-
-
-create table  if not exists tblkhach(
-	id int primary key auto_increment,
-    socmt varchar(20),
-    ten varchar(20),
-    ngaysinh date,
-    sinhvienid int,
-    foreign key (sinhvienid) references tbl_Student(id)
+    studentAddress varchar(50),
+    roomid int,
+    foreign key (roomid) references tblroom(id)
 );
 
-create table  if not exists tbldichvu(
+create table tblGuest(
 	id int primary key auto_increment,
-    ten varchar(50),
-    dongia float,
-    thoigian float
+    idCard varchar(20),
+    `name` varchar(20),
+    dob date,
+    studentid int,
+    foreign key (studentid) references tblstudent(id)
 );
 
-create table  if not exists tblStudentdichvu(
+create table tblService(
 	id int primary key auto_increment,
-    soluong int,
-    sinhvienid int,
-    dichvuid int,
-    foreign key (dichvuid) references tbldichvu(id),
-    foreign key (sinhvienid) references tbl_Student(id)
+    `name` varchar(50),
+    price float,
+    `time` float
 );
 
-create table if not exists  tblxe(
+create table tblStudentService(
 	id int primary key auto_increment,
-    loaixe varchar(50),
-    giatri float,
-    bienso varchar(50),
-    sinhvienid int,
-    foreign key (sinhvienid) references tbl_Student(id)
+    quantity int,
+    studentid int,
+    serviceid int,
+    foreign key (serviceid) references tblService(id),
+    foreign key (studentid) references tblStudent(id)
 );
 
-create table if not exists  tblcheckin(
+create table tblMotorbike(
 	id int primary key auto_increment,
-    thoigian datetime,
-    xeid int,
-    foreign key (xeid) references tblxe(id)
+    motorbikeName varchar(50),
+    price float,
+    licensePlates varchar(50),
+    studentid int,
+    foreign key (studentid) references tblStudent(id)
+);
+drop table tblMotorbike;
+select * from tblRoom;
+
+create table tblCheckin(
+	id int primary key auto_increment,
+    `time` datetime,
+    motorBikeid int,
+    foreign key (motorBikeid) references tblMotorbike(id)
 );
 
-create table if not exists  tblcheckout(
+create table tblCheckout(
 	id int primary key auto_increment,
-    thoigian datetime,
+    `time` datetime,
     checkinid int,
-    foreign key (checkinid) references tblcheckin(id)
+    foreign key (checkinid) references tblCheckin(id)
 );
 
-create table if not exists  tblmonthly(
+create table tblMonthlyTicket(
 	id int primary key auto_increment,
-    sinhvienid int,
-    thang int,
-    xeid int,
-    foreign key (xeid) references tblxe(id),
-    foreign key (sinhvienid) references tbl_Student(id)
+	studentid int,
+    `month` int,
+    motorBikeid int,
+    foreign key (motorBikeid) references tblMotorBike(id),
+    foreign key (studentid) references tblStudent(id)
 );
 
-ALTER TABLE tblphong AUTO_INCREMENT = 1;
-ALTER TABLE tbl_Student AUTO_INCREMENT = 1;
-ALTER TABLE tblkhach AUTO_INCREMENT = 1;
-ALTER TABLE tblStudentdichvu AUTO_INCREMENT = 1;
-ALTER TABLE tblxe AUTO_INCREMENT = 1;
-ALTER TABLE tblcheckin AUTO_INCREMENT = 1;
-ALTER TABLE tblcheckout AUTO_INCREMENT = 1;
-ALTER TABLE tblmonthly AUTO_INCREMENT = 1;
-ALTER TABLE tbldichvu AUTO_INCREMENT = 1;
+insert into tblRoom(roomNumber, `type`, price, amountPeople)
+values('105', 'phong thuong', 500000, 6),
+('106', 'phong thuong', 300000, 8),
+('107', 'phong thuong', 700000, 4),
+('201', 'phong vip', 1000000, 8),
+('202', 'phong vip', 2000000, 6),
+('203', 'phong vip', 3000000, 4),
+('304', 'phong thuong', 800000, 6),
+('305', 'phong thuong', 900000, 4),
+('306', 'phong thuong', 500000, 6);
+
+insert into tblStudent(studentID, studentName, idCard, dob, classroom, studentAddress, roomid)
+values('B17DCCN335', 'Hoàng Tăng Khải', '123456789', 19990128,'CNPM05', 'Hà Nội', 1),
+('B17DCCN359', 'Phạm Trung Kiên', '123456987', 19990127,'CNPM05', 'Quảng Ninh', 1),
+('B17DCCN563', 'Nguyễn Tất Thắng', '123458769', 19990126,'CNPM05', 'Thái Bình', 2),
+('B17DCCN335', 'Hoàng Minh Tâm', '123476589', 19990125,'CNPM05', 'Hà Nội', 2),
+('B17DCCN335', 'Bùi Xuân Quang', '125436789', 19990124,'CNPM05', 'Thái Bình', 3);
 
 
+insert into tblGuest(idCard, `name`, dob, studentid)
+values('123459768', 'Nguyễn Quang Huy', 19991208, 1),
+('123459687', 'Nguyễn Ngọc Tuấn', 19990819, 2),
+('123453454', 'Nguyễn Đức Thủy', 19950819, 3),
+('123454325', 'Nguyễn Tuấn Nghĩa', 19990615, 4),
+('123475674', 'Hoàng Tùng Lâm', 20000820, 2),
+('543453214', 'Hoàng Hải An', 20010919, 1),
+('543459687', 'Nguyễn Ngọc Ánh', 19990819, 3),
+('876459768', 'Quách Gia Huy', 19990708, 5);
+
+insert into tblService(`name`, price, `time`)
+values('Trông xe', 3000, 8),
+('Thuê xe', 100000, 24),
+('Giặt là', 200000, 2),
+('Thuê phòng ăn', 50000, 2);
+
+insert into tblMotorBike(licensePlates, studentid)
+values('29Y5 12345', 1),
+('14Y5 03739', 2),
+('17Y5 12134', 3),
+('29Z6 7481', 4),
+('17Y5 84353', 5);
 
 
-    
+insert into tblStudentService(quantity, studentid, serviceid)
+values(1, 1, 1),
+(2, 2, 2),
+(1, 3, 2),
+(1, 1, 3),
+(1, 4, 4);
+
+insert into tblMonthlyTicket(studentid, `month`, motorBikeid)
+values(1, 11, 1),
+(2, 11, 2),
+(3, 12, 3),
+(4, 12, 4);
+
+-- insert into tblCheckin(motorBikeid, `time`)
+-- values(1, 20201119080000),
+-- (2, 20201111070000),
+-- (3, 20201119090000),
+-- (4, 20201116100000),
+-- (5, 20201113160000);
+
+-- insert into tblCheckout(checkinid, `time`)
+-- values(2, 20201117070000),
+-- (4, 20201119080000),
+-- (5, 20201114070000);
+
+select * from tblmonthlyticket;
+select * from tblcheckin;

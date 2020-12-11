@@ -13,17 +13,20 @@ import javax.persistence.*;
 
 @Data
 @Entity
-@Table(name = "tblphong")
+@Table(name = "tblroom")
 public class Room {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
     @NotNull
-    private String sophong;
+    @Column(name = "roomnumber")
+    private String roomNumber;
     @NotNull
-    private String loaiphong;
+    @Column(name = "type")
+    private String type;
     @NotNull
-    private float dongia;
+    private float price;
     @NotNull
-    private int songuoi;
+    @Column(name = "amountpeople")
+    private int amountPeople;
 }

@@ -1,5 +1,6 @@
 package ptit;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -11,18 +12,21 @@ import lombok.Data;
 
 @Entity
 @Data
-@Table(name = "tblxe")
+@Table(name = "tblmotorbike")
 public class Motorbike {
     @Id
     private int id;
     @NotNull
-    private String loaixe;
+    @Column(name = "motorbikename")
+    private String motorbikeName;
     @NotNull
-    private float giatri;
+    @Column(name = "price")
+    private float price;
     @NotNull
-    private String bienso;
+    @Column(name = "licenseplates")
+    private String licensePlates;
     @NotNull
     @OneToOne
-    @JoinColumn(name = "sinhvienid")
+    @JoinColumn(name = "studentid")
     private Student student;
 }

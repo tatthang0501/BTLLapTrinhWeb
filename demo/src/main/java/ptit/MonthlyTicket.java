@@ -11,19 +11,19 @@ import lombok.Data;
 
 @Entity
 @Data
-@Table(name="tblmonthly")
+@Table(name="tblmonthlyticket")
 public class MonthlyTicket {
     @Id
     private int id;
     @NotNull
     @OneToOne
-    @JoinColumn(name = "sinhvienid")
+    @JoinColumn(name = "studentid")
     private Student student;
     @NotNull
-    private int thang;
-    
+    private int month;
+
     @NotNull
     @OneToOne
-    @JoinColumn(name = "xeid")
+    @JoinColumn(name = "motorbikeid")
     private Motorbike motorbike;
 }

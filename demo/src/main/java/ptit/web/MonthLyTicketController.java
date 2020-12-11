@@ -55,14 +55,12 @@ public class MonthLyTicketController {
     @PostMapping("/addMonthlyTicket")
     public String addMonthlyTicketProcess(ServletRequest request, Model model, MonthlyTicket ticket){
         try{
-            String thang = request.getParameter("thang");
-            String xeid = request.getParameter("xeid");
-            System.out.println(thang);
-            System.out.println(xeid);
-            Motorbike moto = motoRepo.findById(Integer.parseInt(xeid)).get();
+            String month = request.getParameter("month");
+            String licensePlates = request.getParameter("licensePlates");
+            Motorbike moto = motoRepo.findById(Integer.parseInt(licensePlates)).get();
             ticket.setMotorbike(moto);
             ticket.setStudent(moto.getStudent());
-            ticket.setThang(Integer.parseInt(thang));
+            ticket.setMonth(Integer.parseInt(month));
             ticketRepo.save(ticket);
         }
         catch(Exception ex){
@@ -102,9 +100,9 @@ public class MonthLyTicketController {
     
 
     @PostMapping("/findMonthlyTicket")
-    public String findTicketProcess(ServletRequest request, Model model, String bienso){
+    public String findTicketProcess(ServletRequest request, Model model, String licensePlates){
         try{
-             List<Motorbike> listMoto = (List<Motorbike>) motoRepo.findBybienso(bienso);
+             List<Motorbike> listMoto = (List<Motorbike>) motoRepo.findByLicensePlates(licensePlates);
              List<MonthlyTicket> listTicket = new ArrayList<MonthlyTicket>();
              for(Motorbike moto : listMoto){
                  MonthlyTicket ticket = ticketRepo.findBymotorbike(moto);
@@ -130,7 +128,7 @@ public class MonthLyTicketController {
         //     }
         model.addAttribute("ticsDisplay", listTicket);
         model.addAttribute("ticDisplay", new MonthlyTicket());
-        model.addAttribute("bienso", bienso);
+        model.addAttribute("licensePlates", licensePlates);
         }
         catch(Exception e){
             return "redirect:/findMonthlyTicket?error";
@@ -161,7 +159,11 @@ public class MonthLyTicketController {
     @PostMapping("/editMonthlyTicket")
     public String editMonthlyTicketProcess(ServletRequest request, Model model, MonthlyTicket ticket){
         try{
+            String month = request.getParameter("name");
+            String licensePlates = request.getParameter("licensePlates");
+            String studentid = request.getParameter("studentid");
             ticketRepo.save(ticket);
+
             return "redirect:/ticket/findMonthlyTicket";
         }
         catch(Exception e){

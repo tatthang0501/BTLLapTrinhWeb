@@ -61,7 +61,7 @@
             <td th:field="${student.DOB}" th:text="${student.DOB}"></td>
             <td th:field="${student.classroom}" th:text="${student.classroom}"></td>
             <td th:field="${student.studentAddress}" th:text="${student.studentAddress}"></td>
-            <td th:field="${student.room.sophong}" th:text="${student.room.sophong}"></td>
+            <td th:field="${student.room.roomNumber}" th:text="${student.room.roomNumber}"></td>
             <td><a th:href="@{/student/editStudent(id=${student.id})}">Sửa</a></td>
             <td><a th:href="@{/student/deleteStudent(id=${student.id})}">Xóa</a></td>
           </tr>

@@ -22,14 +22,14 @@ import lombok.Data;
 public class CheckIn {
     @Id
     private int id;
-    private Date thoigian;
+    private Date time;
     @OneToOne
-    @JoinColumn(name = "xeid")
+    @JoinColumn(name = "motorBikeid")
     private Motorbike motorbike;
 
 
     @PrePersist
     void thoigian(){
-        thoigian = new Date();
+        time = new Date();
     }
 }

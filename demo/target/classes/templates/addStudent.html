@@ -61,7 +61,7 @@
             <td><p>Phòng ở: </p></td>
             <td>
             <select name="phongid">
-              <option th:each="room: ${rooms}" th:value="${room.id}" th:text="${room.sophong}"></option>
+              <option th:each="room: ${rooms}" th:value="${room.id}" th:text="${room.roomNumber}"></option>
             </select></td>
           </tr>
         </table>

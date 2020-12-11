@@ -10,6 +10,6 @@ import org.springframework.data.repository.query.Param;
 import ptit.CheckIn;
 
 public interface CheckInRepository extends CrudRepository<CheckIn,Integer>{
-    @Query(value="select * from tblcheckin where DATE(tblcheckin.thoigian) =:date AND tblcheckin.xeid =:id",nativeQuery = true)
+    @Query(value="select * from tblcheckin where DATE(tblcheckin.time) =:date AND tblcheckin.motorbikeid =:id",nativeQuery = true)
     Iterable<CheckIn> findCheckInToday(@Param("date") String date, @Param("id") int id);
 }

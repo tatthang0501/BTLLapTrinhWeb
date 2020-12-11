@@ -20,14 +20,14 @@ public class CheckOut {
     @Id
     private int id;
     @NotNull
-    private Date thoigian;
+    private Date time;
     @NotNull
     @OneToOne
-    @JoinColumn(name = "checkin")
+    @JoinColumn(name = "checkinid")
     private CheckIn checkin;
 
     @PrePersist
     void thoigian(){
-        this.thoigian = new Date();
+        this.time = new Date();
     }
 }

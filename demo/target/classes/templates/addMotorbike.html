@@ -35,19 +35,19 @@
         <table>
           <tr>
             <td><p>Loại xe </p></td>
-            <td><input type="text" name="loaixe" value="" placeholder="Nhập loại xe"></td>
+            <td><input type="text" name="motorbikeName" value="" placeholder="Nhập loại xe"></td>
           </tr>
           <tr>
             <td><p>Giá trị </p></td>
-            <td><input type="number" name="giatri" value="" placeholder="Nhập giá trị"></td>
+            <td><input type="number" name="price" value="" placeholder="Nhập giá trị"></td>
           </tr>
           <tr>
             <td><p>Biển số </p></td>
-            <td><input type="text" name="bienso" placeholder="Nhập biển số xe"></td>
+            <td><input type="text" name="licensePlates" placeholder="Nhập biển số xe"></td>
           </tr>
           <tr>
             <td><p>Chủ xe </p></td>
-            <td><select name="sinhvienid">
+            <td><select name="studentid">
               <option th:each="student: ${students}" th:value="${student.id}" th:text="${student.studentName}"></option>
             </select></td>
           </tr>

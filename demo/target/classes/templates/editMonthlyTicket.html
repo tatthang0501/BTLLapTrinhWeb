@@ -30,7 +30,7 @@
     </div>
 
     <div class="container">
-      <form class="loginForm" th:action="@{/ticket/addMonthlyTicket}" method="post">
+      <form class="loginForm" th:action="@{/ticket/editMonthlyTicket}" method="post">
         <h1 class="addSV">Thêm vé xe</h1>
         <table>
             <tr>
@@ -39,26 +39,26 @@
             </tr>
           <tr>
             <td><p>Chủ xe</p></td>
-            <td><select name="sinhvienid">
+            <td><select name="studentid">
               <option th:each="student: ${students}" th:value="${student.id}" th:text="${student.studentName}"></option>
             </select></td>
           </tr>
           <tr>
             <td><p>Chọn tháng</p></td>
-            <td><select name="thang" id="">
+            <td><select name="month" id="">
               <option th:each="i: ${#numbers.sequence(month,12)}" th:value="${i}" th:text="${i}"></option>
             </select></td>
           </tr>
           <tr>
             <td><p>Chọn xe</p></td>
-            <td><select name="xeid" id="">
-              <option th:each="motorbike: ${motorbikes}" th:value="${motorbike.id}" th:text="${motorbike.bienso}"></option>
+            <td><select name="licensePlates" id="">
+              <option th:each="motorbike: ${motorbikes}" th:value="${motorbike.id}" th:text="${motorbike.licensePlates}"></option>
             </select></td>
           </tr>
         </table>
         <input type="submit" name="addStudent" value="Cập nhật">
         <input type="reset" name="reset" value="Xóa tất cả">
-        <a href="findRoomContract.html"><input type="button" name="goBack" value="Quay lại"></a>
+        <a th:href="@{/ticket/findMonthlyTicket}"><input type="button" name="goBack" value="Quay lại"></a>
       </form>
     </div>
 

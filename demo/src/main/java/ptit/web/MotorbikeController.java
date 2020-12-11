@@ -46,9 +46,9 @@ public class MotorbikeController {
     @PostMapping("/addMotorbike")
     public String addMotorbikeProcess(ServletRequest request, Model model, Motorbike motorbike) {
         try {
-            String sinhvienid = request.getParameter("sinhvienid");
+            String studentid = request.getParameter("studentid");
             Student student = new Student();
-            student.setId(Integer.parseInt(sinhvienid));
+            student.setId(Integer.parseInt(studentid));
             motorbike.setStudent(student);
             motoRepo.save(motorbike);
         } catch (Exception e) {
@@ -81,7 +81,7 @@ public class MotorbikeController {
             List<Motorbike> listALlMoto = (List<Motorbike>) motoRepo.findAll();
             List<Motorbike> listMoto = new ArrayList<Motorbike>();
             for (Motorbike moto : listALlMoto) {
-                if (moto.getLoaixe().contains(loaixe)) {
+                if (moto.getMotorbikeName().contains(loaixe)) {
                     listMoto.add(moto);
                 }
             }
@@ -110,9 +110,9 @@ public class MotorbikeController {
     @PostMapping("/editMotorbike")
     public String editMotorbikedo(ServletRequest request, Model model, Motorbike motorbike) {
         try {
-            String sinhvienid = request.getParameter("sinhvienid");
+            String studentid = request.getParameter("studentid");
             Student student = new Student();
-            student.setId(Integer.parseInt(sinhvienid));
+            student.setId(Integer.parseInt(studentid));
             motorbike.setStudent(student);
             motoRepo.save(motorbike);
         } catch (Exception e) {
