@@ -54,10 +54,10 @@
           </tr>
           <tr th:each="ticDisplay: ${ticsDisplay}">
             <td th:field="${ticDisplay.id}" th:text="${ticDisplay.id}"></td>
-            <td th:field="${ticDisplay.studentName}" th:text="${ticDisplay.studentName}"></td>
-            <td th:field="${ticDisplay.studentID}" th:text="${ticDisplay.studentID}"></td>
-            <td th:field="${ticDisplay.month}" th:text="${ticDisplay.month}"></td>
-            <td th:field="${ticDisplay.motorbikeID}" th:text="${ticDisplay.motorbikeID}"></td>
+            <td th:field="${ticDisplay.student.studentName}" th:text="${ticDisplay.student.studentName}"></td>
+            <td th:field="${ticDisplay.student.studentID}" th:text="${ticDisplay.student.studentID}"></td>
+            <td th:field="${ticDisplay.thang}" th:text="${ticDisplay.thang}"></td>
+            <td th:field="${ticDisplay.motorbike.bienso}" th:text="${ticDisplay.motorbike.bienso}"></td>
             <td><a th:href="@{/ticket/editMonthlyTicket(id=${ticDisplay.id})}">Sửa</a></td>
             <td><a th:href="@{/ticket/deleteMonthlyTicket(id=${ticDisplay.id})}">Xóa</a></td>
           </tr>

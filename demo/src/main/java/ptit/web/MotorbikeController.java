@@ -64,15 +64,11 @@ public class MotorbikeController {
 
             List<Motorbike> listMoto = (List<Motorbike>) motoRepo.findAll();
             for (Motorbike moto : listMoto) {
-                Student stu = stuRepo.findById(Integer.parseInt(moto.getSinhvienid())).get();
-                String studentName = stu.getStudentName();
-                moto.setSinhvienid(studentName);
-                // float giatri = Float.parseFloat(formatter.format(moto.getGiatri()));
-                // moto.setGiatri(giatri);
+                Student stu = stuRepo.findById(moto.getStudent().getId()).get();
+                moto.setStudent(stu);
             }
             model.addAttribute("motorbikes", listMoto);
             model.addAttribute("motorbike", new Motorbike());
-            model.addAttribute("student", new Student());
         } catch (Exception e) {
             return "redirect:/findMotorbike?error";
         }
@@ -89,11 +85,9 @@ public class MotorbikeController {
                     listMoto.add(moto);
                 }
             }
-
             for (Motorbike moto : listMoto) {
-                Student stu = stuRepo.findById(Integer.parseInt(moto.getSinhvienid())).get();
-                String studentName = stu.getStudentName();
-                moto.setSinhvienid(studentName);
+                Student stu = stuRepo.findById(moto.getStudent().getId()).get();
+                moto.setStudent(stu);
             }
             model.addAttribute("motorbikes", listMoto);
             model.addAttribute("motorbike", new Motorbike());
@@ -117,7 +111,9 @@ public class MotorbikeController {
     public String editMotorbikedo(ServletRequest request, Model model, Motorbike motorbike) {
         try {
             String sinhvienid = request.getParameter("sinhvienid");
-            motorbike.setSinhvienid(sinhvienid);
+            Student student = new Student();
+            student.setId(Integer.parseInt(sinhvienid));
+            motorbike.setStudent(student);
             motoRepo.save(motorbike);
         } catch (Exception e) {
             return "redirect:/motorbike/editMotorbike?error";

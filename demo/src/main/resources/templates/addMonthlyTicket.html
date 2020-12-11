@@ -33,12 +33,12 @@
       <form class="loginForm" th:action="@{/ticket/addMonthlyTicket}" method="post">
         <h1 class="addSV">Thêm vé xe</h1>
         <table>
-          <tr>
+          <!-- <tr>
             <td><p>Chủ xe</p></td>
             <td><select name="sinhvienid">
-              <option th:each="student: ${students}" th:value="${student.id}" th:text="${student.studentName}"></option>
+              <option th:each="student: ${students}" th:value="${student.id}" th:text="${student.studentName + }"></option>
             </select></td>
-          </tr>
+          </tr> -->
           <tr>
             <td><p>Chọn tháng</p></td>
             <td><select name="thang" id="">

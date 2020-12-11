@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import ptit.MonthlyTicket;
-import ptit.MonthlyTicketDisplay;
 import ptit.Motorbike;
 import ptit.Student;
 import ptit.data.MonthlyTicketRepository;
@@ -43,12 +42,9 @@ public class MonthLyTicketController {
 
     @GetMapping("/addMonthlyTicket")
     public String addMonthlyTicket(ServletRequest request, Model model){
-        List<Student> listStudent = (List<Student>) stuRepo.findAll();
-        List<Motorbike> listMoto = (List<Motorbike>) motoRepo.findAll();
+        List<Motorbike> listMoto = (List<Motorbike>) motoRepo.findMotorbikeNotHavedTicketYet();
         model.addAttribute("ticket", new MonthlyTicket());
-        model.addAttribute("students", listStudent);
         model.addAttribute("motorbikes", listMoto);
-        model.addAttribute("student", new Student());
         model.addAttribute("motorbike", new Motorbike());
         LocalDate date = LocalDate.now();
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM");
@@ -59,16 +55,14 @@ public class MonthLyTicketController {
     @PostMapping("/addMonthlyTicket")
     public String addMonthlyTicketProcess(ServletRequest request, Model model, MonthlyTicket ticket){
         try{
-            String sinhvienid = request.getParameter("sinhvienid");
             String thang = request.getParameter("thang");
             String xeid = request.getParameter("xeid");
-            Student student = new Student();
-            student.setId(Integer.parseInt(sinhvienid));
-            ticket.setStudent(student);
+            System.out.println(thang);
+            System.out.println(xeid);
+            Motorbike moto = motoRepo.findById(Integer.parseInt(xeid)).get();
+            ticket.setMotorbike(moto);
+            ticket.setStudent(moto.getStudent());
             ticket.setThang(Integer.parseInt(thang));
-            Motorbike motorbike = new Motorbike();
-            motorbike.setId(Integer.parseInt(xeid));
-            ticket.setMotorbike(motorbike);
             ticketRepo.save(ticket);
         }
         catch(Exception ex){
@@ -80,7 +74,12 @@ public class MonthLyTicketController {
     @GetMapping("/findMonthlyTicket")
     public String findTicket(Model model){
         List<MonthlyTicket> listTicket = (List<MonthlyTicket>) ticketRepo.findAll();
-
+        for(MonthlyTicket ticket: listTicket){
+            Student student = stuRepo.findById(ticket.getStudent().getId()).get();
+            Motorbike motorbike = motoRepo.findById(ticket.getMotorbike().getId()).get();
+            ticket.setStudent(student);
+            ticket.setMotorbike(motorbike);
+        }
         // for(MonthlyTicket ticket: listTicket){
         //     MonthlyTicketDisplay ticketDisplay = new MonthlyTicketDisplay();
         //     ticketDisplay.setId(ticket.getId());
@@ -108,7 +107,7 @@ public class MonthLyTicketController {
              List<Motorbike> listMoto = (List<Motorbike>) motoRepo.findBybienso(bienso);
              List<MonthlyTicket> listTicket = new ArrayList<MonthlyTicket>();
              for(Motorbike moto : listMoto){
-                 MonthlyTicket ticket = ticketRepo.findByxeid(moto.getId());
+                 MonthlyTicket ticket = ticketRepo.findBymotorbike(moto);
                  listTicket.add(ticket);
              }
 

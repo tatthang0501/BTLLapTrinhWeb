@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javassist.Loader.Simple;
 import ptit.CheckIn;
-import ptit.CheckedInMotorbike;
 import ptit.Motorbike;
 import ptit.data.CheckInRepository;
 import ptit.data.MotorbikeRepository;
@@ -62,7 +61,7 @@ public class CheckController {
     public String checkIn(ServletRequest request, Model model, Motorbike motorbike){
         try{
             CheckIn checkIn = new CheckIn();
-            checkIn.setXeid(motorbike.getId());
+            checkIn.setMotorbike(motorbike);
             checkinRepo.save(checkIn);
         }
         catch(Exception e){
@@ -74,19 +73,13 @@ public class CheckController {
     @GetMapping("/findCheckOut")
     public String checkOut(ServletRequest request, Model model, Motorbike motorbike){
         List<CheckIn> listCheckedIn = (List<CheckIn>) checkinRepo.findAll();
-        List<CheckedInMotorbike> listCheckedInMotorbikes = new ArrayList<CheckedInMotorbike>();
         for(CheckIn checkedIn: listCheckedIn){
-            CheckedInMotorbike temp = new CheckedInMotorbike();
-            temp.setId(checkedIn.getId());
-            Motorbike moto = motoRepo.findById(checkedIn.getXeid()).get();
-            temp.setBienso(moto.getBienso());
-            temp.setThoigian(checkedIn.getThoigian().toString());
-            temp.setFee(getFee(CheckIfCheckMoreThan2Times(moto.getId())));
-            listCheckedInMotorbikes.add(temp);
+            Motorbike moto = motoRepo.findById(checkedIn.getMotorbike().getId()).get();
+            checkedIn.setMotorbike(moto);
         }
 
-        model.addAttribute("listCheckedIn",listCheckedInMotorbikes);
-        model.addAttribute("checkedIn", new CheckedInMotorbike());
+        model.addAttribute("listCheckedIn",listCheckedIn);
+        model.addAttribute("checkedIn", new CheckIn());
         return "redirect:/motorbike/findMotorbike";
     }
 
