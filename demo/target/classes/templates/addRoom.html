@@ -1,58 +1,40 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title>Quản lý thông tin phòng trọ</title>
-    <link rel="stylesheet" href="../static/css/styles.css" th:href="@{/css/styles.css}">
-  </head>
+  <div th:insert="/head::head">  </div>
   <body>
 
-    <div class="header">
-      <div class="nav-container">
-        <div class="logo">
-          <img src="logo.png" class = "logo" alt="" width="120px">
-        </div>
-        <div class="navbar">
-          <nav>
-            <ul id="Menu">
-              <li><a href="login.html"><button type="button" name="button" class="btn1">Đăng xuất</button></a></li>
-              <li><a href="Q&A.html">Hỏi & đáp</a></li>
-              <li><a href="QlVX.html">Quản lý vé xe</a></li>
-              <li><a href="QlDV.html">Quản lý dịch vụ</a></li>
-              <li><a href="QlHD.html">Quản lý hợp đồng</a></li>
-              <li><a href="QlPT.html">Quản lý phòng trọ</a></li>
-              <li><a href="QlSV.html">Quản lý SV</a></li>
-              <li><a href="index.html">Trang chủ</a></li>
-            </ul>
-          </nav>
-        </div>
-      </div>
-    </div>
+    
+  <div th:insert="/navbar::navbar">  </div>
 
     <div class="container">
-      <form class="loginForm" th:action="@{/room/addRoom}" method="post">
+      <form class="loginForm" method="post">
         <h1 class="addSV">Thêm phòng</h1>
-        <table>
+        <table th:object="${add}">
+          <tr>
+            <td colspan="2">
+              <p th:text="${msg}"></p>
+            </td>
+          </tr>
           <tr>
             <td><p>Số phòng: </p></td>
-            <td><input type="text" name="roomName" value="" placeholder="Nhập số phòng"></td>
+            <td><input type="text" name="roomName" th:field="*{sophong}" placeholder="Nhập số phòng" required></td>
           </tr>
           <tr>
             <td><p>Loại phòng: </p></td>
-            <td><input type="text" name="roomKind" value="" placeholder="Nhập loại phòng"></td>
+            <td><input type="text" name="roomKind" th:field="*{loaiphong}" placeholder="Nhập loại phòng" required></td>
           </tr>
           <tr>
             <td><p>Đơn giá: </p></td>
-            <td><input type="number" name="roomPrice" value="" placeholder="Nhập đơn giá"></td>
+            <td><input type="text" name="roomPrice" th:field="*{dongia}" placeholder="Nhập đơn giá" required></td>
           </tr>
           <tr>
             <td><p>Số người tối đa: </p></td>
-            <td><input type="number" name="maxRentingperson" value="" placeholder="Nhập số người ở tối đa"></td>
+            <td><input type="text" name="maxRentingperson" th:field="*{songuoi}" placeholder="Nhập số người ở tối đa" required></td>
           </tr>
         </table>
         <input type="submit" name="addRoom" value="Thêm">
         <input type="reset" name="reset" value="Xóa tất cả">
-        <a href="QLPT.html"><input type="button" name="goBack" value="Quay lại"></a>
+        <a href="/room"><input type="button" name="goBack" value="Quay lại"></a>
       </form>
     </div>
 

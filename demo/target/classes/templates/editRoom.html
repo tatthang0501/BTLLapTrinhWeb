@@ -12,19 +12,19 @@
         <table th:object=${room}>
           <tr>
             <td><p>Số phòng: </p></td>
-            <td><input type="text" name="stuIDCard" th:field="*{sophong}" th:value="${room.sophong}"></td>
+            <td><input type="text" name="stuIDCard" th:field="*{sophong}" th:value="${room.sophong}" required></td>
           </tr>
           <tr>
             <td><p>Loại phòng: </p></td>
-            <td><input type="text" name="stuName" th:field="*{loaiphong}" th:value="${room.loaiphong}"></td>
+            <td><input type="text" name="stuName" th:field="*{loaiphong}" th:value="${room.loaiphong}" required></td>
           </tr>
           <tr>
             <td><p>Đơn giá: </p></td>
-            <td><input type="text" name="identityNumber" th:field="*{dongia}" th:value="${room.dongia}"></td>
+            <td><input type="text" name="identityNumber" th:field="*{dongia}" th:value="${room.dongia}" required></td>
           </tr>
           <tr>
             <td><p>Số người tối đa: </p></td>
-            <td><input type="text" name="DOB" th:field="*{songuoi}" th:value="${room.songuoi}"></td>
+            <td><input type="text" name="DOB" th:field="*{songuoi}" th:value="${room.songuoi}" required></td>
           </tr>
         </table>
         <input type="submit" value="Cập nhật">

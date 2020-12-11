@@ -36,47 +36,52 @@ public class RoomController {
         this.roomRepo = roomRepo;
     }
 
-    // @ModelAttribute
-    // public void addIngredientsToModel(Model model) {
-    // List<Ingredient> ingredients = (List<Ingredient>) ingredientRepo.findAll();
-    // Type[] types = Ingredient.Type.values();
-    // for (Type type : types) {
-    // model.addAttribute(type.toString().toLowerCase(), filterByType(ingredients,
-    // type));
-    // }
-    // }
-
     @GetMapping
     public String showRoomMgmt(Model model) {
         // model.addAttribute("taco", new Taco());
+        model.addAttribute("page", "Quản lý phòng trọ");
         return "QLPT";
     }
 
     @GetMapping("/addRoom")
     public String showAddRoom(ServletRequest request, Model model) {
         model.addAttribute("add", new Room());
+        model.addAttribute("page", "Thêm phòng");
         Map<String, String[]> paramMap = request.getParameterMap();
+
         if (paramMap.containsKey("error")) {
             model.addAttribute("msg", "Có lỗi xảy ra (Trùng thông tin)");
+        } else if (paramMap.containsKey("formatError")) {
+            model.addAttribute("msg", "Có lỗi xảy ra (Sai định dạng)");
         }
         return "addRoom";
     }
 
     @GetMapping("/roomSearch")
     public String showRoomSearch(ServletRequest request, Model model) {
+        model.addAttribute("page", "Tìm kiếm phòng");
         List<Room> rooms = (List<Room>) roomRepo.findAll();
         model.addAttribute("rooms", rooms);
         model.addAttribute("search", new Room());
         Map<String, String[]> paramMap = request.getParameterMap();
         if (paramMap.containsKey("error")) {
-            model.addAttribute("msg", "Có lỗi xảy ra (Phòng có sinh viên đang ở)");
+            model.addAttribute("msg", "Có lỗi xảy ra (Phòng có sinh viên đang ở)!");
+        } else if (paramMap.containsKey("delete")) {
+            model.addAttribute("msg", "Xóa phòng thành công!");
+        } else if (paramMap.containsKey("edit")) {
+            model.addAttribute("msg", "Thay đổi thông tin thành công!");
+        } else if (paramMap.containsKey("add")) {
+            model.addAttribute("msg", "Thêm phòng thành công!");
+        } else if (paramMap.containsKey("formatError")) {
+            model.addAttribute("msg", "Sai định dạng thông tin!");
         }
         return "roomSearch";
     }
 
     @GetMapping("/roomEdit")
     // @RequestMapping("/roomEdit")
-    public String showRoomEdit(Model model, @RequestParam(name = "id") String id) {
+    public String showRoomEdit(Model model, @RequestParam(name = "id") Long id) {
+        model.addAttribute("page", "Sửa phòng");
         Room room = roomRepo.findById(id).get();
         model.addAttribute("room", room);
         return "editRoom";
@@ -84,12 +89,10 @@ public class RoomController {
 
     @GetMapping("/delete")
     // @RequestMapping("/roomEdit")
-    public String deleteRoom(Model model, @RequestParam(name = "id") String id) {
-        String msg = "";
+    public String deleteRoom(Model model, @RequestParam(name = "id") Long id) {
         try {
             roomRepo.deleteById(id);
         } catch (Exception e) {
-            msg = "Có lỗi xảy ra (phòng đang có sinh viên)";
             List<Room> rooms = (List<Room>) roomRepo.findAll();
             model.addAttribute("rooms", rooms);
             model.addAttribute("search", new Room());
@@ -98,7 +101,7 @@ public class RoomController {
         List<Room> rooms = (List<Room>) roomRepo.findAll();
         model.addAttribute("rooms", rooms);
         model.addAttribute("search", new Room());
-        return "redirect:/room/roomSearch";
+        return "redirect:/room/roomSearch?delete";
     }
 
     @PostMapping("/roomSearch")
@@ -106,7 +109,7 @@ public class RoomController {
         List<Room> allRooms = (List<Room>) roomRepo.findAll();
         List<Room> rooms = new ArrayList<>();
         for (Room r : allRooms) {
-            if (r.getPrice() <= room.getPrice()) {
+            if (r.getDongia() <= room.getDongia()) {
                 rooms.add(r);
             }
         }
@@ -117,31 +120,44 @@ public class RoomController {
 
     @PostMapping("/roomEdit")
     public String processEdit(Room room, Model model) {
-        Room roomB4 = roomRepo.findById(room.getId()).get();
-        roomB4.setPrice(room.getPrice());
-        roomB4.setType(room.getType());
-        roomB4.setAmountPeople(room.getAmountPeople());
-        roomB4.setRoomNumber(room.getRoomNumber());
-        roomRepo.save(roomB4);
-
-        List<Room> allRooms = (List<Room>) roomRepo.findAll();
-        List<Room> rooms = new ArrayList<>();
-        for (Room r : allRooms) {
-            if (r.getPrice() <= room.getPrice()) {
-                rooms.add(r);
-            }
+        Boolean valid = true;
+        if (room.getDongia() <= 0 || room.getSonguoi() <= 0) {
+            valid = false;
         }
-        return "redirect:/room/roomSearch";
+        if (valid == true) {
+            Room roomB4 = roomRepo.findById(room.getId()).get();
+            roomB4.setDongia(room.getDongia());
+            roomB4.setLoaiphong(room.getLoaiphong());
+            roomB4.setSonguoi(room.getSonguoi());
+            roomB4.setSophong(room.getSophong());
+            try {
+                roomRepo.save(roomB4);
+            } catch (Exception e) {
+                return "redirect:/room/roomSearch?error";
+            }
+            return "redirect:/room/roomSearch?edit";
+        } else {
+            return "redirect:/room/roomSearch?formatError";
+        }
+
     }
 
     @PostMapping("/addRoom")
     public String processAdd(Room room) {
-        try {
-            roomRepo.save(room);
-        } catch (Exception e) {
-            return "redirect:/room/addRoom?error";
+        Boolean valid = true;
+        if (room.getDongia() <= 0 || room.getSonguoi() <= 0) {
+            valid = false;
         }
-        return "redirect:/room/roomSearch";
+        if (valid == true) {
+            try {
+                roomRepo.save(room);
+            } catch (Exception e) {
+                return "redirect:/room/addRoom?error";
+            }
+            return "redirect:/room/roomSearch?add";
+        } else {
+            return "redirect:/room/addRoom?formatError";
+        }
     }
 
 }
