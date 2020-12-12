@@ -18,13 +18,13 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name="tblcheckin")
-@SecondaryTable(name = "tblcheckout", pkJoinColumns = @PrimaryKeyJoinColumn(name = "checkin"))
+@SecondaryTable(name = "tblcheckout", pkJoinColumns = @PrimaryKeyJoinColumn(name = "checkinid"))
 public class CheckIn {
     @Id
     private int id;
     private Date time;
     @OneToOne
-    @JoinColumn(name = "motorBikeid")
+    @JoinColumn(name = "motorbikeid")
     private Motorbike motorbike;
 
 

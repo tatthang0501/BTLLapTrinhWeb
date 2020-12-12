@@ -11,6 +11,8 @@ import org.springframework.data.repository.query.Param;
 import ptit.CheckIn;
 
 public interface CheckInRepository extends CrudRepository<CheckIn,Integer>{
-    @Query(value="select * from tblcheckin where DATE(tblcheckin.time) = ?1 AND tblcheckin.motorbikeid ?2",nativeQuery = true)
-    Iterable<CheckIn> findCheckInToday(Date date, int id);
+    @Query(value="select * from tblcheckin where DATE(tblcheckin.time) = ?1 AND tblcheckin.motorbikeid = ?2",nativeQuery = true)
+    Iterable<CheckIn> findCheckInToday(String date, int id);
+
+
 }
