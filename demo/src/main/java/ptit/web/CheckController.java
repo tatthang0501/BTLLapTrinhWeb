@@ -82,8 +82,9 @@ public class CheckController {
     }
 
     @GetMapping("/checkIn")
-    public String checkIn(ServletRequest request, Model model, Motorbike motorbike) {
+    public String checkIn(HttpServletRequest request, Model model, Motorbike motorbike) {
         String msg = "";
+        HttpSession session = request.getSession();
         try {
             CheckIn checkIn = new CheckIn();
             checkIn.setMotorbike(motorbike);
@@ -96,22 +97,22 @@ public class CheckController {
                 if (checkInAble) {
                     msg = "Checkin thành công";
                     checkinRepo.save(checkIn);
-                    model.addAttribute("msg", msg);
+                    session.setAttribute("msg", msg);
                 }
                 if (checkInAble == false) {
                     msg = "Không thể checkin vì chưa checkout";
-                    model.addAttribute("msg", msg);
-                    return "redirect:/check/findCheckOut";
+                    session.setAttribute("msg", msg);
+                    return "redirect:/motorbike/findMotorbike";
                 }
             }
             if (list.size() == 0) {
                 msg = "Checkin thành công";
                 checkinRepo.save(checkIn);
-                model.addAttribute("msg", msg);
+                session.setAttribute("msg", msg);
             }
 
         } catch (Exception e) {
-            return "redirect:/motorbike/findMotorbike?error";
+            return "redirect:/motorbike/findMotorbike";
         }
         return "redirect:/check/findCheckOut";
     }

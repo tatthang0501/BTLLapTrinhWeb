@@ -33,7 +33,10 @@
       <form class=" inputStudentName" th:action="@{/motorbike/findMotorbike}" method="post">
         <h1 class = "addSV">Tìm xe</h1>
         <table>
-          
+          <tr>
+            <td><p th:text="${msg}"></p></td>
+          </tr>
+          <tr>
             <td><p>Nhập loại xe: </p></td>
             <td><input type="text" name="loaixe" th:value="${motorbike.motorbikeName}" placeholder="Nhập loại xe"></td>
           </tr>

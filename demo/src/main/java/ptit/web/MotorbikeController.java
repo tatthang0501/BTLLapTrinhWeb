@@ -6,6 +6,8 @@ import java.util.List;
 
 import javax.security.auth.message.callback.SecretKeyCallback.Request;
 import javax.servlet.ServletRequest;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -58,10 +60,13 @@ public class MotorbikeController {
     }
 
     @GetMapping("/findMotorbike")
-    public String findMotorbike(ServletRequest request, Model model) {
+    public String findMotorbike(HttpServletRequest request, Model model) {
+        HttpSession session = request.getSession();
+        String msg = (String) session.getAttribute("msg");
+        session.removeAttribute("msg");
         try {
             // DecimalFormat formatter = new DecimalFormat("###,###,###");
-
+            
             List<Motorbike> listMoto = (List<Motorbike>) motoRepo.findAll();
             for (Motorbike moto : listMoto) {
                 Student stu = stuRepo.findById(moto.getStudent().getId()).get();
@@ -72,6 +77,9 @@ public class MotorbikeController {
         } catch (Exception e) {
             return "redirect:/findMotorbike?error";
         }
+        System.out.println(msg);
+        model.addAttribute("msg", msg);
+        
         return "findMotorbike";
     }
 
