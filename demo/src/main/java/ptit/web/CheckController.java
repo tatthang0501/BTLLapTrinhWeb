@@ -11,6 +11,8 @@ import java.time.format.DateTimeFormatter;
 
 import javax.servlet.Servlet;
 import javax.servlet.ServletRequest;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -39,24 +41,19 @@ public class CheckController {
         this.checkOutRepo = checkOutRepo;
     }
 
-    public boolean CheckIfCheckMoreThan2Times(int motorbikeid) {
-        boolean rs = false;
+    public int CheckIfCheckMoreThan2Times(int motorbikeid) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyy-MM-dd");
         List<CheckIn> list = (List<CheckIn>) checkinRepo.findCheckInToday(sdf.format(new Date()), motorbikeid);
-        System.out.println(list.size());
         int checkInCount = list.size();
-        if (checkInCount > 2) {
-            rs = true;
-        }
-        return rs;
+        return checkInCount;
     }
 
-    public int getFee(boolean check) {
+    public int getFee(int checkInCount) {
         int fee = 0;
-        if (check == true) {
+        if (checkInCount > 2) {
             fee = 3000;
         }
-        if (check == false) {
+        if (checkInCount <= 2) {
             fee = 0;
         }
         return fee;
@@ -91,7 +88,8 @@ public class CheckController {
             CheckIn checkIn = new CheckIn();
             checkIn.setMotorbike(motorbike);
             SimpleDateFormat sdf = new SimpleDateFormat("yyyyy-MM-dd");
-            List<CheckIn> list = (List<CheckIn>) checkinRepo.findCheckInToday(sdf.format(new Date()), motorbike.getId());
+            List<CheckIn> list = (List<CheckIn>) checkinRepo.findCheckInToday(sdf.format(new Date()),
+                    motorbike.getId());
             if (list.size() > 0) {
                 CheckIn lastCheckIn = list.get(list.size() - 1);
                 boolean checkInAble = canCheckIn(lastCheckIn);
@@ -132,21 +130,47 @@ public class CheckController {
         return "findCheckOut";
     }
 
+    @PostMapping("/findCheckOut")
+    public String findCheckedOutMotorbike(ServletRequest request, Model model, String licensePlates){
+        try{
+            List<CheckIn> listCheckedIn = (List<CheckIn>) checkinRepo.findAll();
+            List<CheckIn> listCheckInContainsLP = new ArrayList<CheckIn>();
+            for(CheckIn checkIn :listCheckedIn){
+                Motorbike moto = motoRepo.findById(checkIn.getMotorbike().getId()).get();
+                checkIn.setMotorbike(moto);
+                if(moto.getLicensePlates().contains(licensePlates)){
+                    listCheckInContainsLP.add(checkIn);
+                }
+                
+            }
+            System.out.println(listCheckInContainsLP.size());
+
+            List<CheckIn> listCheckInCanCheckOut = canCheckOut(listCheckInContainsLP);
+            model.addAttribute("listCheckedIn", listCheckInCanCheckOut);
+            model.addAttribute("checkedIn", new CheckIn());
+        }
+        catch(Exception e){
+            return "redirect:/check/findCheckOut?error";
+        }
+        return "findCheckOut";
+    }
+
     @GetMapping("/checkOut")
-    public String checkOut(Model model, int id) {
+    public String checkOut(Model model, int id, HttpServletRequest request) {
         try {
             CheckOut checkOut = new CheckOut();
             CheckIn checkIn = checkinRepo.findById(id).get();
             checkOut.setCheckin(checkIn);
             checkOutRepo.save(checkOut);
-            
+
             int checkInCount = 0;
-            boolean rs = CheckIfCheckMoreThan2Times(checkIn.getMotorbike().getId(), checkInCount);
-            int fee = getFee(rs);
-            System.out.println(checkInCount);
-            System.out.println(fee);
-            model.addAttribute("fee", fee);
-            model.addAttribute("count", checkInCount);
+            checkInCount = CheckIfCheckMoreThan2Times(checkIn.getMotorbike().getId());
+            int fee = getFee(checkInCount);
+
+            HttpSession session = request.getSession();
+
+            session.setAttribute("fee", fee);
+            session.setAttribute("checkInCount", checkInCount);
         } catch (Exception e) {
             return "redirect:/check/findCheckOut?error";
         }
@@ -154,8 +178,14 @@ public class CheckController {
     }
 
     @GetMapping("/getCheckOutFee")
-    public String getCheckOutFee(Model model){
-    
+    public String getCheckOutFee(Model model, HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        int fee = (Integer) session.getAttribute("fee");
+        int checkInCount = (Integer) session.getAttribute("checkInCount");
+        System.out.println(fee);
+        System.out.println(checkInCount);
+        model.addAttribute("fee", fee);
+        model.addAttribute("count", checkInCount);
         return "getCheckOutFee";
     }
 }

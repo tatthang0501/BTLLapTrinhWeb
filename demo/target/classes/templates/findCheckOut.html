@@ -30,7 +30,7 @@
     </div>
 
     <div class="container stuFo">
-      <form class=" inputStudentName" th:action="@{/motorbike/findMotorbike}" method="post">
+      <form class=" inputStudentName" th:action="@{/check/findCheckOut}" method="post">
         <h1 class = "addSV">Tìm xe</h1>
         <table>
           <tr>
@@ -38,8 +38,8 @@
           </tr>
           <tr>
           <tr>
-            <td><p>Nhập loại xe: </p></td>
-            <td><input type="text" name="loaixe" th:value="${motorbike.motorbikeName}" placeholder="Nhập loại xe"></td>
+            <td><p>Nhập biển số xe: </p></td>
+            <td><input type="text" name="licensePlates" th:value="${licensePlates}" placeholder="Nhập biển số xe"></td>
           </tr>
         </table>
         <input type="submit" name="findService" value="Tìm">
@@ -55,7 +55,7 @@
           </tr>
           <tr th:each="checkedIn: ${listCheckedIn}">
             <td th:field="${checkedIn.id}" th:text="${checkedIn.id}"></td>
-            <td th:field="${checkedIn.motorbike.motorbikeName}" th:text="${checkedIn.motorbike.motorbikeName}"></td>
+            <td th:field="${checkedIn.motorbike.licensePlates}" th:text="${checkedIn.motorbike.licensePlates}"></td>
             <td th:field="${checkedIn.time}" th:text="${checkedIn.time}"></td>
             <!-- <td th:field="${checkedIn.fee}" th:text="${checkedIn.fee}"></td> -->
             <td><a th:href="@{/check/checkOut(id=${checkedIn.id})}">CheckOut</a></td>
