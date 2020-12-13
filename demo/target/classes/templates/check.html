@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <div th:insert="/head::head">  </div>
+  <body>
+
+    
+  <div th:insert="/navbar::navbar">  </div>
+
+    <div class="studentManagement">
+        <div class="">
+            <a th:href="@{/motorbike/findMotorbike}" class="btn">Checkin theo xe</a>
+          </div>
+      <div class="">
+        <a th:href="@{/check/findCheckOut}" class="btn">CheckOut</a>
+      </div>
+        <!-- <div>
+          <a href="findRoom.html" class="btn ttpt">Tìm kiếm tt phòng trọ</a>
+        </div> -->
+    </div>
+  </body>
+</html>

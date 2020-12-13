@@ -41,6 +41,11 @@ public class CheckController {
         this.checkOutRepo = checkOutRepo;
     }
 
+    @GetMapping
+    public String showManagementPage(){
+        return "check.html";
+    }
+
     public int CheckIfCheckMoreThan2Times(int motorbikeid) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyy-MM-dd");
         List<CheckIn> list = (List<CheckIn>) checkinRepo.findCheckInToday(sdf.format(new Date()), motorbikeid);
